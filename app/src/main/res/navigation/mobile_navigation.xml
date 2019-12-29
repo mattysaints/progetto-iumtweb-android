@@ -13,31 +13,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.ium.unito.progetto_ium_tweb1.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.ium.unito.progetto_ium_tweb1.ui.prenRip.PrenRipFragment"
+        android:label="Prenotare una ripetizione"
+        tools:layout="@layout/fragment_prenrip" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.ium.unito.progetto_ium_tweb1.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.ium.unito.progetto_ium_tweb1.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
-
-    <fragment
-        android:id="@+id/nav_share"
-        android:name="com.ium.unito.progetto_ium_tweb1.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.ium.unito.progetto_ium_tweb1.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:name="com.ium.unito.progetto_ium_tweb1.ui.viewPren.ViewPrenFragment"
+        android:label="Visualizza le tue prenotazioni"
+        tools:layout="@layout/fragment_viewpren" />
 </navigation>

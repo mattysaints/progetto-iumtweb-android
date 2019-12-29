@@ -18,21 +18,4 @@
             android:title="Visualizza le tue prenotazioni" />
     </group>
 
-    <item android:title="Amministratore">
-        <menu>
-            <item
-                android:id="@+id/gestioneDocenti"
-                android:icon="@drawable/ic_gdocenti"
-                android:title="Gestione docenti" />
-            <item
-                android:id="@+id/gestioneCorsi"
-                android:icon="@drawable/ic_gcorsi"
-                android:title="Gestione corsi" />
-            <item
-                android:id="@+id/storicoGlobale"
-                android:icon="@drawable/ic_storico"
-                android:title="Storico Globale" />
-        </menu>
-    </item>
-
 </menu>
