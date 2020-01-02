@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.concurrent.ExecutionException;
 
 public class PrenRipFragment extends Fragment {
 
@@ -32,27 +33,27 @@ public class PrenRipFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        prenRipViewModel =
-                ViewModelProviders.of(this).get(PrenRipViewModel.class);
         View root = inflater.inflate(R.layout.fragment_prenrip, container, false);
-        /*final TextView textView = root.findViewById(R.id.text_gallery);
-        prenRipViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
-        new taskJson().execute();
+        TextView textView = root.findViewById(R.id.textView);
+        String url = "http://www.massimocarli.eu/bus/bus_stop.json";
+        try {
+            String s = new taskJson().execute(url).get().toString();
+            textView.setText(s);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return root;
     }
 
-    private class taskJson extends AsyncTask<Void,Void,String>{
+    private class taskJson extends AsyncTask<String,Void,String>{
 
         private String result;
 
         @Override
-        protected String doInBackground(Void... voids) {
-            result = downloadJsonFile();
+        protected String doInBackground(String... strings) {
+            result = downloadJsonFile(strings[0]);
 
             if(result == null){
                 Log.d("Download","Download non riuscito");
@@ -60,12 +61,12 @@ public class PrenRipFragment extends Fragment {
             return result;
         }
 
-        private String downloadJsonFile(){
+        private String downloadJsonFile(String urlPath){
 
             StringBuilder stringBuilder = new StringBuilder(); //stringa mutabile
 
             try{
-                URL url = new URL("http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili");
+                URL url = new URL(urlPath);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 int response = connection.getResponseCode(); //ERROR 404 ...
@@ -95,6 +96,10 @@ public class PrenRipFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+        }
+
+        public String getResult() {
+            return result;
         }
     }
 
