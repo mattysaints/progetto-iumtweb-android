@@ -1,5 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -68,10 +69,11 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if (response != null &&
-                response.get("result") != null &&
-                response.get("result").equals("success")) {
-            result.setText("Autenticazione avvenuta con successo");
+        if (response != null && response.get("result") != null && Boolean.parseBoolean(response.get("result"))) {
+            // result.setText("Autenticazione avvenuta con successo");
+            Intent homepageIntent = new Intent(this, Homepage.class);
+            homepageIntent.putExtra("username", usr);
+            startActivity(homepageIntent);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Credenziali inserite non corrette!", Toast.LENGTH_LONG);
             toast.show();
