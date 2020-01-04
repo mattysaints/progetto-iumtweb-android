@@ -1,5 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +30,6 @@ import java.util.concurrent.ExecutionException;
 
 public class PrenRipFragment extends Fragment {
 
-    private PrenRipViewModel prenRipViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,6 +101,9 @@ public class PrenRipFragment extends Fragment {
         public String getResult() {
             return result;
         }
+    }
+
+    public static void sendObject(Context context, int position) {
     }
 
 

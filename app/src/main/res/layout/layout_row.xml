@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/selectableItemBackground"
+    android:id="@+id/touch_layout"
+    android:padding="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Docente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:textStyle="bold"
+                android:text="Docente :" />
+
+            <TextView
+                android:id="@+id/Corso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Docente"
+                android:layout_marginTop="0dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:textStyle="bold"
+                android:text="Corso : " />
+
+            <TextView
+                android:id="@+id/Giorno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Ora"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:textStyle="bold"
+                android:text="Giorno : " />
+
+            <TextView
+                android:id="@+id/Ora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="right"
+                android:paddingLeft="70dp"
+                android:paddingVertical="20dp"
+                android:textStyle="bold"
+                android:text="Ora : " />
+
+            <TextView
+                android:id="@+id/DocenteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/Docente"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/CorsoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/Corso"
+                android:layout_marginTop="0dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:layout_below="@+id/DocenteText"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/OraText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/Ora"
+                android:layout_centerHorizontal="true"
+                android:gravity="right"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/GiornoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/OraText"
+                android:layout_toRightOf="@id/Giorno"
+                android:text="TextView"
+                android:layout_marginTop="0dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"/>
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>
