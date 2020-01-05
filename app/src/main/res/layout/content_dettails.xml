@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.prenRip.DettailsActivity"
     android:padding="15dp"
-    android:background="#eeeee"
+    android:background="#25383C"
     android:fillViewport="true"
     tools:showIn="@layout/activity_dettails">
 
@@ -22,6 +22,105 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/docDettails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:paddingVertical="50dp"
+                android:paddingLeft="40dp"
+                android:text="Docente :"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/corDettails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="Corso : "
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_below="@+id/docDettails"
+                android:paddingVertical="50dp"
+                android:paddingLeft="55dp"/>
+
+            <TextView
+                android:id="@+id/giorDettails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giorno : "
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_below="@+id/corDettails"
+                android:paddingVertical="50dp"
+                android:paddingLeft="40dp" />
+
+            <TextView
+                android:id="@+id/oraDettails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ora : "
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_below="@+id/giorDettails"
+                android:paddingVertical="50dp"
+                android:paddingLeft="68dp" />
+
+            <TextView
+                android:id="@+id/docDettailsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/docDettails"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingVertical="50dp"
+                android:text="Andrea Bianchi"
+                android:textSize="20dp"
+                android:layout_above="@+id/corDettails"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/corDettailsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Matematica"
+                android:textSize="20dp"
+                android:layout_above="@+id/giorDettails"
+                android:layout_below="@+id/docDettailsText"
+                android:layout_toRightOf="@+id/corDettails"
+                android:layout_alignParentRight="true"
+                android:paddingVertical="50dp"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/giorDettailsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/corDettailsText"
+                android:layout_above="@id/oraDettails"
+                android:layout_toRightOf="@+id/giorDettails"
+                android:layout_alignParentRight="true"
+                android:textSize="20dp"
+                android:paddingVertical="50dp"
+                android:textAlignment="center"
+                android:text="Lunedì" />
+
+            <TextView
+                android:id="@+id/oraDettailsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/giorDettailsText"
+                android:layout_toRightOf="@+id/oraDettails"
+                android:paddingVertical="50dp"
+                android:layout_alignParentRight="true"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:text="15 - 16" />
 
 
         </RelativeLayout>

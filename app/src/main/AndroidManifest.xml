@@ -17,16 +17,19 @@
         <activity
             android:name=".ui.prenRip.DettailsActivity"
             android:label="@string/title_activity_dettails"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".Homepage"
             android:label="@string/title_activity_homepage"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".Main"
@@ -39,7 +42,7 @@
         </activity>
         <activity
             android:name=".Login"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="preloaded_fonts"

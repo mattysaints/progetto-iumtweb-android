@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         Prenotazione prenotazione = prenotazioni.get(position);
         StringBuilder docente = new StringBuilder(prenotazione.getDocente().getNome());
         docente.append(prenotazione.getDocente().getCognome());
@@ -66,6 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 PrenRipFragment.sendObject(context,position);
+                notifyItemChanged(holder.getAdapterPosition());
             }
         });
     }
@@ -81,7 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView corso;
         private TextView giorno;
         private TextView ora;
-        private RecyclerView touch_layout;
+        private RelativeLayout touch_layout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,7 +91,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             corso = itemView.findViewById(R.id.CorsoText);
             giorno = itemView.findViewById(R.id.GiornoText);
             ora = itemView.findViewById(R.id.OraText);
-            touch_layout = itemView.findViewById(R.id.touch_layout);
+            touch_layout = itemView.findViewById(R.id.toolbar_layout);
         }
     }
 
