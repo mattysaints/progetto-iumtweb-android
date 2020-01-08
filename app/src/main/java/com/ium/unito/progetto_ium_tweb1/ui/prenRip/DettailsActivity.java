@@ -13,13 +13,22 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
 
+import java.io.PrintStream;
 import java.io.Serializable;
 
 public class DettailsActivity extends AppCompatActivity {
+
+    private Prenotazione prenotazione;
+    private TextView docente;
+    private TextView corso;
+    private TextView giorno;
+    private TextView ora;
+    private CollapsingToolbarLayout toolbar_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +48,21 @@ public class DettailsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        docente = findViewById(R.id.docDettails);
+        corso = findViewById(R.id.corDettails);
+        giorno = findViewById(R.id.giorDettails);
+        ora = findViewById(R.id.oraDettails);
+
+        prenotazione = (Prenotazione) getIntent().getExtras().getSerializable("prenotazione");
+        assert prenotazione != null;
+        StringBuilder docenteNC = new StringBuilder(prenotazione.getDocente().getNome());
+        docenteNC.append(prenotazione.getDocente().getCognome());
+        docente.setText(docenteNC);
+        corso.setText(prenotazione.getCorso().getTitolo());
     }
 
-    public static Intent getDettailsIntent(Context context, Prenotazione prenotazione) {
-        Intent intent = new Intent(context, DettailsActivity.class);
-        intent.putExtra("prenotazione", (Serializable) prenotazione);
-        return intent;
-    }
+
 
 
 }

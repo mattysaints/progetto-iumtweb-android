@@ -2,6 +2,7 @@ package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ium.unito.progetto_ium_tweb1.Homepage;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -36,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        Prenotazione prenotazione = prenotazioni.get(position);
+        final Prenotazione prenotazione = prenotazioni.get(position);
         StringBuilder docente = new StringBuilder(prenotazione.getDocente().getNome());
         docente.append(prenotazione.getDocente().getCognome());
         holder.docente.setText(docente.toString());
@@ -66,10 +69,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.touch_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PrenRipFragment.sendObject(context,position);
-                notifyItemChanged(holder.getAdapterPosition());
+                //PrenRipFragment.sendObject(context,position);
+                //notifyItemChanged(holder.getAdapterPosition());
+                Intent dettailsIntent = new Intent(context, DettailsActivity.class);
+                dettailsIntent.putExtra("prenotazione", position);
+                context.startActivity(dettailsIntent);
             }
         });
+    }
+
+    public Prenotazione getItem(int position) {
+        return prenotazioni.get(position);
     }
 
     @Override
@@ -91,7 +101,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             corso = itemView.findViewById(R.id.CorsoText);
             giorno = itemView.findViewById(R.id.GiornoText);
             ora = itemView.findViewById(R.id.OraText);
-            touch_layout = itemView.findViewById(R.id.toolbar_layout);
+            touch_layout = itemView.findViewById(R.id.touch_layout);
         }
     }
 
