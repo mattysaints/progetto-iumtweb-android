@@ -1,6 +1,7 @@
 package com.ium.unito.progetto_ium_tweb1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpPost;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class Login extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private TextView result;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,8 @@ public class Login extends AppCompatActivity {
         Map<String, String> params = new HashMap<>();
         params.put("username", usr);
         params.put("password", psw);
-        AsyncTask<Void, Void, String> task = new AsyncHttpPost("http://10.0.2.2:8080/progetto_ium_tweb2/Login", params);
-        task.execute();
+        AsyncTask<AsyncHttp.Ajax, Void, String> task = new AsyncHttp();
+        task.execute(new AsyncHttp.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/Login","POST", params));
 
         Map<String, String> response = null;
         try {

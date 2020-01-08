@@ -2,6 +2,8 @@ package com.ium.unito.progetto_ium_tweb1.utils;
 
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -16,45 +19,31 @@ import java.util.Map;
 /**
  * Task che esegue una generica post e restituise il risultato
  */
-public class AsyncHttpPost extends AsyncTask<Void, Void, String> {
-    private String url;
-    private Map<String, String> parameters;
-
-    /**
-     * Costruttore che si vuole nascondere
-     */
-    private AsyncHttpPost() {
-    }
-
-    /**
-     * Costruttore
-     *
-     * @param url: url della post
-     */
-    public AsyncHttpPost(String url, Map<String, String> parameters) {
-        this.url = url;
-        this.parameters = parameters;
-    }
+public class AsyncHttp extends AsyncTask<AsyncHttp.Ajax, Void, String> {
 
     /**
      * Ottiene il risultato dal server
      *
-     * @param voids: non usati
+     * @param ajaxs: contiene url, method e params
      * @return true se il login è avvenuto con successo
      */
     @Override
-    protected String doInBackground(Void... voids) {
+    protected String doInBackground(Ajax... ajaxs) {
         HttpURLConnection connection = null;
         BufferedReader in = null;
         BufferedWriter out = null;
         String response = null;
-
+        Ajax ajax = ajaxs[0];
         try {
-            connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("POST");
+            connection = (HttpURLConnection) ajax.url.openConnection();
+            connection.setRequestMethod(ajax.method);
             connection.setDoOutput(true);
 
-            String params = encodeParameters();
+            String params;
+            if (ajax.params==null)
+                params="";
+            else
+                params = encodeParameters(ajax.params);
             out = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
             out.write(params);
             out.flush();
@@ -84,12 +73,13 @@ public class AsyncHttpPost extends AsyncTask<Void, Void, String> {
      *
      * @return stringa di parametri codificati
      * @throws UnsupportedEncodingException: URLEncoder.encode()
+     * @param params
      */
-    private String encodeParameters() throws UnsupportedEncodingException {
+    private String encodeParameters(Map<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
 
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+        for (Map.Entry<String, String> entry : params.entrySet()) {
             if (first)
                 first = false;
             else
@@ -119,5 +109,33 @@ public class AsyncHttpPost extends AsyncTask<Void, Void, String> {
         }
 
         return builder.toString();
+    }
+
+    public static class Ajax {
+        public URL url;
+        public String method;
+        public Map<String,String> params;
+
+        public Ajax(@NonNull String url) {
+            try {
+                this.url = new URL(url) ;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            method="POST";
+        }
+
+        public Ajax(@NonNull String url, String method, Map<String, String> params) {
+            try {
+                this.url = new URL(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            if(method==null)
+                this.method="POST";
+            else
+                this.method = method;
+            this.params = params;
+        }
     }
 }
