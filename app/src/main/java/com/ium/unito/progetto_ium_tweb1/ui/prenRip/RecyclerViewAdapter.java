@@ -3,6 +3,8 @@ package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final Prenotazione prenotazione = prenotazioni.get(position);
         StringBuilder docente = new StringBuilder(prenotazione.getDocente().getNome());
+        docente.append(" ");
         docente.append(prenotazione.getDocente().getCognome());
         holder.docente.setText(docente.toString());
         holder.corso.setText(prenotazione.getCorso().getTitolo());
@@ -57,22 +60,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 holder.giorno.setText("Venerdì");
         }
         switch (prenotazione.getSlot().toString()) {
-            case "15":
+            case "Orario: 15":
                 holder.ora.setText("15-16");
-            case "16":
+            case "Orario: 16":
                 holder.ora.setText("16-17");
-            case "17":
+            case "Orario: 17":
                 holder.ora.setText("17-18");
-            case "18":
+            case "Orario: 18":
                 holder.ora.setText("18-19");
         }
         holder.touch_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //PrenRipFragment.sendObject(context,position);
-                //notifyItemChanged(holder.getAdapterPosition());
+                notifyItemChanged(holder.getAdapterPosition());
                 Intent dettailsIntent = new Intent(context, DettailsActivity.class);
-                dettailsIntent.putExtra("prenotazione", position);
+                dettailsIntent.putExtra("prenotazione", getItem(position));
                 context.startActivity(dettailsIntent);
             }
         });
