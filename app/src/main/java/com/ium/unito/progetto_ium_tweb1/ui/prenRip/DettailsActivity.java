@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpPost;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
 
 import java.io.PrintStream;
 import java.io.Serializable;
@@ -51,17 +51,16 @@ public class DettailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put("op", "prenotare");
-                    params.put("prenotazioni", gson.toJson(prenotazione));
+            try{
+                HashMap<String, String> params = new HashMap<>();
+                params.put("op", "prenotare");
+                params.put("prenotazioni", gson.toJson(prenotazione));
 
-                    AsyncTask<Void, Void, String> task = new AsyncHttpPost("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", params);
-                    task.execute();
+                AsyncTask<AsyncHttp.Ajax, Void, String> task = new AsyncHttp().execute(new AsyncHttp.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             }
         });
 
