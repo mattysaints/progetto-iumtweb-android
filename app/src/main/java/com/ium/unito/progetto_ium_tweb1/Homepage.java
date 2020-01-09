@@ -49,7 +49,8 @@ public class Homepage extends AppCompatActivity {
 
         TextView username = navigationView.getHeaderView(0).findViewById(R.id.user_textView);
         Intent origin = getIntent();
-        String usr = origin.getStringExtra("username");
+        StringBuilder usr = new StringBuilder("Benvenuto/a ");
+        usr.append(origin.getStringExtra("username"));
         username.setText(usr);
     }
 

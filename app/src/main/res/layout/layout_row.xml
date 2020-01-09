@@ -11,7 +11,14 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="#edf0fa"
+        android:elevation="4dp"
+        android:padding="2dp"
+        app:cardCornerRadius="12dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -22,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="20dp"
-                android:textStyle="bold"
-                android:text="Docente :" />
+                android:text="Docente :"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Corso"
@@ -33,8 +40,8 @@
                 android:layout_marginTop="0dp"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp"
-                android:textStyle="bold"
-                android:text="Corso : " />
+                android:text="Corso : "
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Giorno"
@@ -45,8 +52,8 @@
                 android:layout_marginTop="0dp"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp"
-                android:textStyle="bold"
-                android:text="Giorno : " />
+                android:text="Giorno : "
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Ora"
@@ -54,10 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="right"
-                android:paddingLeft="70dp"
                 android:paddingVertical="20dp"
-                android:textStyle="bold"
-                android:text="Ora : " />
+                android:paddingLeft="70dp"
+                android:text="Ora : "
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/DocenteText"
@@ -73,19 +80,19 @@
                 android:id="@+id/CorsoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/Corso"
+                android:layout_below="@+id/DocenteText"
                 android:layout_marginTop="0dp"
+                android:layout_toRightOf="@+id/Corso"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp"
-                android:layout_below="@+id/DocenteText"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/OraText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/Ora"
                 android:layout_centerHorizontal="true"
+                android:layout_toRightOf="@+id/Ora"
                 android:gravity="right"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="20dp"
@@ -96,11 +103,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/OraText"
-                android:layout_toRightOf="@id/Giorno"
-                android:text="TextView"
                 android:layout_marginTop="0dp"
+                android:layout_toRightOf="@id/Giorno"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"/>
+                android:paddingVertical="5dp"
+                android:text="TextView" />
 
 
         </RelativeLayout>
