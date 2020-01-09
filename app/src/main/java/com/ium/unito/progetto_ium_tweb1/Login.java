@@ -27,7 +27,7 @@ public class Login extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private TextView result;
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,17 @@ public class Login extends AppCompatActivity {
 
         if (response != null && response.get("result") != null && Boolean.parseBoolean(response.get("result"))) {
             // result.setText("Autenticazione avvenuta con successo");
+            pref = getSharedPreferences("user_information", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("username", username.getText().toString());
+            String ad = response.get("admin");
+            assert ad!=null;
+            editor.putBoolean("admin", ad.equals("true"));
+            String osp = response.get("ospite");
+            assert osp!=null;
+            editor.putBoolean("ospite", osp.equals("true"));
+            editor.commit();
+
             Intent homepageIntent = new Intent(this, Homepage.class);
             homepageIntent.putExtra("username", usr);
             startActivity(homepageIntent);
