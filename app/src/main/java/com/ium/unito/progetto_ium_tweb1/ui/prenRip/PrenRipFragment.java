@@ -1,6 +1,7 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,8 +80,8 @@ public class PrenRipFragment extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_filtra:
-                //Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Prova Item", Toast.LENGTH_SHORT); //Test
-                //toast.show();//Test
+                Intent filter = new Intent(getActivity(),FilterActivity.class);
+                startActivity(filter);
                 return true;
         }
 
