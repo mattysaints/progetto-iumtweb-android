@@ -2,6 +2,7 @@ package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -15,8 +16,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.ium.unito.progetto_ium_tweb1.Homepage;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
 import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
@@ -34,6 +37,7 @@ public class DettailsActivity extends AppCompatActivity {
     private TextView ora;
     private CollapsingToolbarLayout toolbar_layout;
     private Gson gson = new Gson();
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,9 @@ public class DettailsActivity extends AppCompatActivity {
         toolbar_layout.setTitle("Ripetizione");
 
         final Prenotazione prenotazione = (Prenotazione) getIntent().getExtras().getSerializable("prenotazione");
+        /*pref = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);  //va in crash se fai il login e poi vai per prenotare
+        String user = pref.getString("username","");
+        prenotazione.getUtente().setAccount(user);*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +64,10 @@ public class DettailsActivity extends AppCompatActivity {
                 params.put("prenotazioni", gson.toJson(prenotazione));
 
                 AsyncTask<AsyncHttp.Ajax, Void, String> task = new AsyncHttp().execute(new AsyncHttp.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
-
+                PrenRipFragment.delete(prenotazione);
+                Toast toast = Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_SHORT);
+                toast.show();
+                onBackPressed();
             } catch (Exception e) {
                 e.printStackTrace();
             }

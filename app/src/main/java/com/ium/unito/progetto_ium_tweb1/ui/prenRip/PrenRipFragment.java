@@ -3,8 +3,12 @@ package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,6 +36,7 @@ public class PrenRipFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_prenrip, container, false);
+        setHasOptionsMenu(true);
 
         String url = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili"; //testato e funziona anche la class taskjson
 
@@ -59,4 +64,26 @@ public class PrenRipFragment extends Fragment {
         return root;
     }
 
+    public static void delete(Prenotazione prenotazione) {
+        prenotazioni.remove(prenotazione);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.prenrip, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_filtra:
+                //Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Prova Item", Toast.LENGTH_SHORT); //Test
+                //toast.show();//Test
+                return true;
+        }
+
+        return false;
+    }
 }
