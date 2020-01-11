@@ -1,8 +1,9 @@
 package com.ium.unito.progetto_ium_tweb1.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Insegnamento {
+public class Insegnamento implements Serializable {
 
     private Docente doc;
     private Corso corso;

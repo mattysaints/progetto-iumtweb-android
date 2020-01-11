@@ -31,7 +31,7 @@ public class ViewPrenFragment extends Fragment {
 
     private static List<Prenotazione> prenotazioni;
     private static RecyclerView recyclerView;
-    private static RecyclerViewAdapter adapter;
+    private static RecyclerViewAdapterStorico adapter;
     private static final Gson gson = new Gson();
     public static Context baseContext;
     public static View viewLayout;
@@ -57,7 +57,7 @@ public class ViewPrenFragment extends Fragment {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(linearLayoutManager);
-                adapter = new RecyclerViewAdapter(prenotazioni, root.getContext());
+                adapter = new RecyclerViewAdapterStorico(prenotazioni, root.getContext());
                 recyclerView.setAdapter(adapter);
                 recyclerView.setHasFixedSize(true);
                 adapter.notifyDataSetChanged();

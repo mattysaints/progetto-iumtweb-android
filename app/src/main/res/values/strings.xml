@@ -118,4 +118,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="stato_prenotazione_attiva">attiva</string>
+    <string name="stato_prenotazione_effettuata">effettuata</string>
+    <string name="stato_prenotazione_disdetta">disdetta</string>
 </resources>

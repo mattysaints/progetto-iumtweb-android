@@ -22,10 +22,7 @@ public class Docente implements Serializable {
 
     @Override
     public String toString() {
-        return "Docente{" +
-                "nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
-                '}';
+        return cognome + " " + nome;
     }
 
     @Override
