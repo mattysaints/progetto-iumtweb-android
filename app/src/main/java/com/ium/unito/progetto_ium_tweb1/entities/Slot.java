@@ -12,19 +12,14 @@ public enum Slot{
 
     private final int value;
 
-    int getValue() {
-        return value;
-    }
-
     Slot(int newValue) {
         value = newValue;
     }
 
     @Override
     public String toString() {
-        return "Orario: " + value;
+        return Integer.toString(value) + "-" + Integer.toString(value+1) ;
     }
-    //public int getValue() { return value; }
 
     public static Slot fromInt(int hour) {
         for (Slot ora : Slot.values()) {

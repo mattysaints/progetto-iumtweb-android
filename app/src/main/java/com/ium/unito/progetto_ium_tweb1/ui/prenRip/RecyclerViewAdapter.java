@@ -47,28 +47,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         docente.append(prenotazione.getDocente().getCognome());
         holder.docente.setText(docente.toString());
         holder.corso.setText(prenotazione.getCorso().getTitolo());
-        switch (prenotazione.getGiorno().toString()) {
-            case "lun":
-                holder.giorno.setText("Lunedì");
-            case "mar":
-                holder.giorno.setText("Martedì");
-            case "mer":
-                holder.giorno.setText("Mercoledì");
-            case "gio":
-                holder.giorno.setText("Giovedì");
-            case "ven":
-                holder.giorno.setText("Venerdì");
-        }
-        switch (prenotazione.getSlot().toString()) {
-            case "Orario: 15":
-                holder.ora.setText("15-16");
-            case "Orario: 16":
-                holder.ora.setText("16-17");
-            case "Orario: 17":
-                holder.ora.setText("17-18");
-            case "Orario: 18":
-                holder.ora.setText("18-19");
-        }
+        holder.giorno.setText(prenotazione.getGiorno().toString());
+        holder.ora.setText(prenotazione.getSlot().toString());
+
         holder.touch_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

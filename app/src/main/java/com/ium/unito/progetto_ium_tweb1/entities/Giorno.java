@@ -5,15 +5,15 @@ public enum Giorno {
     //es. Slot.SLOT1.name --> LUN
     //Mentre per visualizzare il risultato nell'interfaccia grafica useremo il metodo toString
 
-    LUN("lun"),
-    MAR("mar"),
-    MER("mer"),
-    GIO("gio"),
-    VEN("ven");
+    LUN("Lunedì"),
+    MAR("Martedì"),
+    MER("Mercoledì"),
+    GIO("Giovedì"),
+    VEN("Venerdì");
 
     @Override
     public String toString() {
-        return this.name().toLowerCase();
+        return value;
     }
 
     private final String value;
