@@ -61,7 +61,6 @@ public class Login extends AppCompatActivity {
         params.put("password", psw);
         AsyncTask<AsyncHttp.Ajax, Void, String> task = new AsyncHttp();
         task.execute(new AsyncHttp.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/Login","POST", params));
-
         Map<String, String> response = null;
         try {
             response = gson.fromJson(task.get(), new TypeToken<Map<String, String>>() {

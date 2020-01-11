@@ -79,34 +79,10 @@ public class DettailsActivity extends AppCompatActivity {
         giorno = findViewById(R.id.giorDettailsText);
         ora = findViewById(R.id.oraDettailsText);
 
-        StringBuilder docenteNC = new StringBuilder(prenotazione.getDocente().getNome());
-        docenteNC.append(" ");
-        docenteNC.append(prenotazione.getDocente().getCognome());
-        docente.setText(docenteNC);
+        docente.setText(prenotazione.getDocente().toString());
         corso.setText(prenotazione.getCorso().getTitolo());
-        switch (prenotazione.getGiorno().toString()) {
-            case "lun":
-                giorno.setText("Lunedì");
-            case "mar":
-                giorno.setText("Martedì");
-            case "mer":
-                giorno.setText("Mercoledì");
-            case "gio":
-                giorno.setText("Giovedì");
-            case "ven":
-                giorno.setText("Venerdì");
-        }
-
-        switch (prenotazione.getSlot().toString()) {
-            case "Orario: 15":
-                ora.setText("15-16");
-            case "Orario: 16":
-                ora.setText("16-17");
-            case "Orario: 17":
-                ora.setText("17-18");
-            case "Orario: 18":
-                ora.setText("18-19");
-        }
+        giorno.setText(prenotazione.getGiorno().toString());
+        ora.setText(prenotazione.getSlot().toString());
     }
 
 

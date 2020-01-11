@@ -42,10 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final Prenotazione prenotazione = prenotazioni.get(position);
-        StringBuilder docente = new StringBuilder(prenotazione.getDocente().getNome());
-        docente.append(" ");
-        docente.append(prenotazione.getDocente().getCognome());
-        holder.docente.setText(docente.toString());
+        holder.docente.setText(prenotazione.getDocente().toString());
         holder.corso.setText(prenotazione.getCorso().getTitolo());
         holder.giorno.setText(prenotazione.getGiorno().toString());
         holder.ora.setText(prenotazione.getSlot().toString());

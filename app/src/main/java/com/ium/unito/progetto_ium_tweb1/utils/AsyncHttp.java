@@ -112,8 +112,8 @@ public class AsyncHttp extends AsyncTask<AsyncHttp.Ajax, Void, String> {
     }
 
     public static class Ajax {
-        public URL url;
-        public String method;
+        URL url;
+        String method;
         public Map<String,String> params;
 
         public Ajax(@NonNull String url) {

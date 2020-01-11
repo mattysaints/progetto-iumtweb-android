@@ -45,7 +45,7 @@ public class PrenRipFragment extends Fragment {
             String p = new AsyncHttp().execute(new AsyncHttp.Ajax(url,"POST", null)).get();
             prenotazioni = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
             }.getType());
-            System.out.println("le prenotazioni: " + prenotazioni);
+            //System.out.println("le prenotazioni: " + prenotazioni);
 
             viewLayout = root.findViewById(R.id.viewLayout);
             recyclerView = root.findViewById(R.id.recyclerView);
