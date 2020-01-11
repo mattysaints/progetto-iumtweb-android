@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Task che esegue una generica post e restituise il risultato
  */
-public class AsyncHttp extends AsyncTask<AsyncHttp.Ajax, Void, String> {
+public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, String> {
     private static boolean initialized = false;
 
     public static void initSessionManagement() {

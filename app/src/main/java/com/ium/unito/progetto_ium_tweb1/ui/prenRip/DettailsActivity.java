@@ -1,33 +1,23 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.ium.unito.progetto_ium_tweb1.Homepage;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 
-import java.io.PrintStream;
-import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 public class DettailsActivity extends AppCompatActivity {
 
@@ -63,7 +53,7 @@ public class DettailsActivity extends AppCompatActivity {
                 params.put("op", "prenotare");
                 params.put("prenotazioni", gson.toJson(prenotazione));
 
-                AsyncTask<AsyncHttp.Ajax, Void, String> task = new AsyncHttp().execute(new AsyncHttp.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
+                AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
                 PrenRipFragment.delete(prenotazione);
                 Toast toast = Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_SHORT);
                 toast.show();

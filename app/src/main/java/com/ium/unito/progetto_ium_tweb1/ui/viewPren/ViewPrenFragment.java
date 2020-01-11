@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
 import com.ium.unito.progetto_ium_tweb1.entities.Utente;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +45,7 @@ public class ViewPrenFragment extends Fragment {
             Utente u = new Utente(user, null, null);
             par.put("utente", gson.toJson(u, Utente.class));
             try {
-                String p = new AsyncHttp().execute(new AsyncHttp.Ajax(url, "POST", par)).get();
+                String p = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax(url, "POST", par)).get();
                 prenotazioni = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
                 }.getType());
                 //System.out.println("le prenotazioni: " + prenotazioni);

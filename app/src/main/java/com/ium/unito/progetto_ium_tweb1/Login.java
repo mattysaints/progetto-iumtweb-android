@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
         password = findViewById(R.id.password_et);
         result = findViewById(R.id.result);
 
-        AsyncHttp.initSessionManagement();
+        AsyncHttpRequest.initSessionManagement();
     }
 
     public void checkAutentication(View view) {
@@ -61,8 +61,8 @@ public class Login extends AppCompatActivity {
         Map<String, String> params = new HashMap<>();
         params.put("username", usr);
         params.put("password", psw);
-        AsyncTask<AsyncHttp.Ajax, Void, String> task = new AsyncHttp();
-        task.execute(new AsyncHttp.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/Login","POST", params));
+        AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest();
+        task.execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/Login", "POST", params));
         Map<String, String> response = null;
         try {
             response = gson.fromJson(task.get(), new TypeToken<Map<String, String>>() {

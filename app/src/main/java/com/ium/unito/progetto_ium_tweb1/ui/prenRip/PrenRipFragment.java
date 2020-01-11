@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,7 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -42,7 +41,7 @@ public class PrenRipFragment extends Fragment {
         String url = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili"; //testato e funziona anche la class taskjson
 
         try {
-            String p = new AsyncHttp().execute(new AsyncHttp.Ajax(url,"POST", null)).get();
+            String p = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax(url, "POST", null)).get();
             prenotazioni = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
             }.getType());
             //System.out.println("le prenotazioni: " + prenotazioni);

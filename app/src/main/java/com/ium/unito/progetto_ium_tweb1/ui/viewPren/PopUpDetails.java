@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -63,7 +63,7 @@ public class PopUpDetails extends AppCompatActivity {
                   Prenotazione[] prens = {prenotazione};
                   params.put("prenotazioni", gson.toJson(prens));
 
-                  AsyncTask<AsyncHttp.Ajax, Void, String> task = new AsyncHttp().execute(new AsyncHttp.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
+                  AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
                   try {
                      if(task.get().equals("true")) {
                         Toast.makeText(getApplicationContext(), "Stato della prenotazione cambiato con successo", Toast.LENGTH_LONG).show();
