@@ -5,7 +5,7 @@
 
     <!-- stringhe activity Login -->
     <string name="welcome_text">Ripetizioni.it</string>
-    <string name="login_label">Login</string>
+    <string name="login_label">LOGIN</string>
     <string name="username_textview">Username: </string>
     <string name="password_textiew">Password: </string>
     <string name="login_button">Accedi</string>
@@ -139,4 +139,8 @@
     <string name="stato_prenotazione_attiva">attiva</string>
     <string name="stato_prenotazione_effettuata">effettuata</string>
     <string name="stato_prenotazione_disdetta">disdetta</string>
+    <string name="logo">Logo</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="ospite">Accedi come ospite</string>
 </resources>

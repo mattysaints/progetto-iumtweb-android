@@ -37,6 +37,8 @@ public class Login extends AppCompatActivity {
         username = findViewById(R.id.username_et);
         password = findViewById(R.id.password_et);
         result = findViewById(R.id.result);
+
+        AsyncHttp.initSessionManagement();
     }
 
     public void checkAutentication(View view) {

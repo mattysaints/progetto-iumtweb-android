@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,6 +23,17 @@ import java.util.Map;
  * Task che esegue una generica post e restituise il risultato
  */
 public class AsyncHttp extends AsyncTask<AsyncHttp.Ajax, Void, String> {
+    private static boolean initialized = false;
+
+    public static void initSessionManagement() {
+        if (initialized)
+            return;
+
+        initialized = true;
+        CookieManager cookieManager = new CookieManager();
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cookieManager);
+    }
 
     /**
      * Ottiene il risultato dal server
