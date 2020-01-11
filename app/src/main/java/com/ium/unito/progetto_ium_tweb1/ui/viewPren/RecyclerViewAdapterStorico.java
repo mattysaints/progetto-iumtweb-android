@@ -3,16 +3,15 @@ package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.MediaStore;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ium.unito.progetto_ium_tweb1.R;
@@ -48,12 +47,21 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
         holder.corso.setText(prenotazione.getCorso().getTitolo());
         holder.giorno.setText(prenotazione.getGiorno().toString());
         holder.ora.setText(prenotazione.getSlot().toString());
-
+        switch(prenotazione.getStato()) {
+            case effettuata:
+                holder.card.setCardBackgroundColor(Color.LTGRAY);
+                break;
+            case attiva:
+                holder.card.setBackgroundColor(Color.GREEN);
+                break;
+            case disdetta:
+                holder.card.setBackgroundColor(Color.RED);
+                break;
+        }
         holder.touch_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 notifyItemChanged(holder.getAdapterPosition());
-
                 Intent detailsIntent = new Intent(context, PopUpDetails.class);
                 detailsIntent.putExtra("prenotazione", getItem(position));
                 context.startActivity(detailsIntent);
@@ -76,8 +84,8 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
         TextView corso;
         TextView giorno;
         TextView ora;
-        RadioGroup stato;
         RelativeLayout touch_layout;
+        CardView card;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,8 +93,8 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
             corso = itemView.findViewById(R.id.CorsoText);
             giorno = itemView.findViewById(R.id.GiornoText);
             ora = itemView.findViewById(R.id.OraText);
-            stato = itemView.findViewById(R.id.statoDetailsRadio);
             touch_layout = itemView.findViewById(R.id.touch_layout);
+            card = itemView.findViewById(R.id.card_row);
         }
     }
 

@@ -1,8 +1,5 @@
 package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 
-import com.ium.unito.progetto_ium_tweb1.entities.Utente;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,7 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.ui.prenRip.RecyclerViewAdapter;
+import com.ium.unito.progetto_ium_tweb1.entities.Utente;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttp;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +48,7 @@ public class ViewPrenFragment extends Fragment {
                 String p = new AsyncHttp().execute(new AsyncHttp.Ajax(url, "POST", par)).get();
                 prenotazioni = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
                 }.getType());
-                System.out.println("le prenotazioni: " + prenotazioni);
+                //System.out.println("le prenotazioni: " + prenotazioni);
 
                 viewLayout = root.findViewById(R.id.viewLayout);
                 recyclerView = root.findViewById(R.id.recyclerView);
