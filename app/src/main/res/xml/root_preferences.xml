@@ -1,0 +1,93 @@
+<!--
+  ~ Copyright 2018 The app Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="auto"
+        android:paddingHorizontal="100dp"
+        app:icon="@drawable/ic_gdocenti"
+        app:title="  Docente">
+        <EditTextPreference
+            android:defaultValue="Scrivi il nome o cognome"
+            android:key="edit_text_preference_1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Cerca per docente..." />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="auto"
+        app:icon="@drawable/ic_gcorsi"
+        android:paddingHorizontal="100dp"
+        app:title="  Corso">
+
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            android:title="Seleziona Corso"
+            app:key="reply"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="auto"
+        app:icon="@drawable/ic_time"
+        android:paddingHorizontal="100dp"
+        app:title="  Ora">
+
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/reply_ora"
+            app:entryValues="@array/reply_Ovalues"
+            android:entries="@array/reply_ora"
+            android:title="Seleziona Ora"
+            app:key="reply"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="auto"
+        app:icon="@drawable/ic_day"
+        android:paddingHorizontal="100dp"
+        app:title="  Giorno">
+
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            android:title="Seleziona Giorno"
+            app:key="reply"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

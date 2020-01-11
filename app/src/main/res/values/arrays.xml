@@ -1,0 +1,45 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Test</item>
+        <item>Test</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="reply_ora">
+        <item>15-16</item>
+        <item>16-17</item>
+        <item>17-18</item>
+        <item>18-19</item>
+    </string-array>
+
+    <string-array name="reply_Ovalues">
+        <item>15-16</item>
+        <item>16-17</item>
+        <item>17-18</item>
+        <item>18-19</item>
+    </string-array>
+
+    <string-array name="reply_giorno">
+        <item>Lunedì</item>
+        <item>Martedì</item>
+        <item>Mercoledì</item>
+        <item>Giovedì</item>
+        <item>Venerdi</item>
+    </string-array>
+
+    <string-array name="reply_Gvalues">
+        <item>Lunedì</item>
+        <item>Martedì</item>
+        <item>Mercoledì</item>
+        <item>Giovedì</item>
+        <item>Venerdi</item>
+    </string-array>
+
+
+
+</resources>
