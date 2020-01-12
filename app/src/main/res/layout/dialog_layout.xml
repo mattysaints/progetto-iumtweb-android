@@ -24,6 +24,7 @@
         android:layout_toRightOf="@+id/DocP"
         android:ems="10"
         android:inputType="textPersonName"
+
         android:paddingLeft="30dp"
         android:paddingTop="30dp"
         android:text="Cognome e Nome"
