@@ -61,6 +61,12 @@
 
 
         <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/reply_ora"
+            android:entryValues="@array/reply_Ovalues"
+            android:key="list_preference_1"
+            android:title="List preference" />
+        <ListPreference
             app:defaultValue="reply"
             app:entries="@array/reply_ora"
             app:entryValues="@array/reply_Ovalues"

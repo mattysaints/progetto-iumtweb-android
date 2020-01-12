@@ -27,9 +27,6 @@ public class Utente implements Serializable {
         return admin;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
-    }
 
     @Override
     public String toString() {

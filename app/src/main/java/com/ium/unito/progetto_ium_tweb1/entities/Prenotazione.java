@@ -63,4 +63,8 @@ public class Prenotazione implements Serializable {
     public int hashCode() {
         return Objects.hash(docente, slot, giorno, stato);
     }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
 }

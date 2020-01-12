@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/DocP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Docente :"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"/>
+
+    <EditText
+        android:id="@+id/DocPText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/DocP"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"
+        android:text="Cognome e Nome"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/CorP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Corso : "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_below="@+id/DocP"
+        android:paddingLeft="30dp"
+        android:paddingTop="40dp"/>
+
+    <EditText
+        android:id="@+id/CorPtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/DocPText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/CorP"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:paddingTop="30dp"
+        android:text="Nome"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/OraP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ora :"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_below="@+id/CorP"
+        android:paddingLeft="47dp"
+        android:paddingTop="40dp"
+        />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CorPtext"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="21dp"
+        android:layout_toRightOf="@+id/OraP"
+        android:paddingTop="40dp" />
+
+    <TextView
+        android:id="@+id/GiornoP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giorno : "
+        android:layout_below="@+id/OraP"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:paddingLeft="30dp"
+        android:paddingTop="40dp"
+        />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner2"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="27dp"
+        android:layout_toRightOf="@+id/GiornoP"
+        android:paddingTop="40dp" />
+
+    <Button
+        android:id="@+id/CercaF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Cerca" />
+
+
+</RelativeLayout>

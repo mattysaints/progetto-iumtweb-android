@@ -1,5 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,8 +31,9 @@ public class PrenRipFragment extends Fragment {
     private static RecyclerView recyclerView;
     private static RecyclerViewAdapter adapter;
     private static final Gson gson = new Gson();
-    public static Context baseContext;
     public static View viewLayout;
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder builder;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class PrenRipFragment extends Fragment {
 
             viewLayout = root.findViewById(R.id.viewLayout);
             recyclerView = root.findViewById(R.id.recyclerView);
+            builder = new AlertDialog.Builder(root.getContext());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(linearLayoutManager);
@@ -78,10 +81,10 @@ public class PrenRipFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_filtra:
-                Intent filter = new Intent(getActivity(),FilterActivity.class);
-                startActivity(filter);
-                return true;
+            case R.id.filtra:
+                builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Filtra Ripetizioni");
+                break;
         }
 
         return false;
