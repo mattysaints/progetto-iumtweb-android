@@ -143,4 +143,10 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="ospite">Accedi come ospite</string>
+    <string name="docente_filter">Docente</string>
+    <string name="corso_filter">Corso</string>
+
+    <!-- filtri -->
+    <string name="ora_spinner_text">Ora</string>
+    <string name="giorno_spinner_text">Giorno</string>
 </resources>

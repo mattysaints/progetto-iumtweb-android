@@ -11,17 +11,17 @@
     </string-array>
 
     <string-array name="reply_ora">
-        <item>15-16</item>
-        <item>16-17</item>
-        <item>17-18</item>
-        <item>18-19</item>
+        <item>15 – 16</item>
+        <item>16 – 17</item>
+        <item>17 – 18</item>
+        <item>18 – 19</item>
     </string-array>
 
     <string-array name="reply_Ovalues">
-        <item>15-16</item>
-        <item>16-17</item>
-        <item>17-18</item>
-        <item>18-19</item>
+        <item>15 – 16</item>
+        <item>16 – 17</item>
+        <item>17 – 18</item>
+        <item>18 – 19</item>
     </string-array>
 
     <string-array name="reply_giorno">
@@ -40,6 +40,22 @@
         <item>Venerdi</item>
     </string-array>
 
+    <string-array name="spinner_entries_ora">
+        <item>Tutti gli orari</item>
+        <item>15 – 16</item>
+        <item>16 – 17</item>
+        <item>17 – 18</item>
+        <item>18 – 19</item>
+    </string-array>
+
+    <string-array name="spinner_entries_giorno">
+        <item>Tutti i giorni</item>
+        <item>Lunedì</item>
+        <item>Martedì</item>
+        <item>Mercoledì</item>
+        <item>Giovedì</item>
+        <item>Venerdi</item>
+    </string-array>
 
 
 </resources>

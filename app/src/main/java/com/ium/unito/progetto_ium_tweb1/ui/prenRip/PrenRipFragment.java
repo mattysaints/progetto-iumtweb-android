@@ -1,9 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,10 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -85,55 +80,25 @@ public class PrenRipFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-            case R.id.filtra:
-                builder = new AlertDialog.Builder(getContext());
-                LayoutInflater inflater = this.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.dialog_layout,null);
-                builder.setView(dialogView);
+        if (id == R.id.filtra) {
+            builder = new AlertDialog.Builder(getContext());
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+            builder.setView(dialogView);
 
-                final EditText Docente = dialogView.findViewById(R.id.DocPText);
-                final EditText Corso = dialogView.findViewById(R.id.CorPtext);
-                final Spinner Ora = dialogView.findViewById(R.id.spinner2);
-                final Spinner Giorno = dialogView.findViewById(R.id.spinner3);
+            final EditText docente = dialogView.findViewById(R.id.docente_et);
+            final EditText corso = dialogView.findViewById(R.id.corso_et);
+            final Spinner ora = dialogView.findViewById(R.id.ora_spinner);
+            final Spinner giorno = dialogView.findViewById(R.id.giorno_spinner);
 
-                String[] ore = new String[] {
-                        "15-16", "16-17", "17-18", "18-19"
-                };
-                String[] giorni = new String[] {
-                        "Lun", "Mar", "Mer", "Gio" , "Ven"
-                };
-
-                Spinner s2 = (Spinner) dialogView.findViewById(R.id.spinner2);
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(),
-                        android.R.layout.simple_spinner_item, ore);
-                adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                s2.setAdapter(adapter2);
-
-                Spinner s3 = (Spinner) dialogView.findViewById(R.id.spinner3);
-                ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getContext(),
-                        android.R.layout.simple_spinner_item, giorni);
-                adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                s3.setAdapter(adapter3);
-
-                builder.setMessage("Filtra Ripetizioni");
-
-                builder.setPositiveButton("Cerca", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        filtraRipetizioni(Docente.getText().toString(),Corso.getText().toString(),Ora.getSelectedItem().toString(),Giorno.getSelectedItem().toString());
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                alertDialog = builder.create();
-                alertDialog.show();
-                break;
+            builder.setMessage("Filtra Ripetizioni");
+            builder.setPositiveButton("Cerca", (dialogInterface, i) -> {
+                filtraRipetizioni(docente.getText().toString(), corso.getText().toString(), ora.getSelectedItem().toString(), giorno.getSelectedItem().toString());
+                dialogInterface.dismiss();
+            });
+            builder.setNegativeButton("Cancella", (dialogInterface, i) -> dialogInterface.dismiss());
+            alertDialog = builder.create();
+            alertDialog.show();
         }
 
         return false;
