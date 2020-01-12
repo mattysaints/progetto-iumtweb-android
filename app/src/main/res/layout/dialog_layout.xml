@@ -104,12 +104,5 @@
         android:layout_toRightOf="@+id/GiornoP"
         android:paddingTop="40dp" />
 
-    <Button
-        android:id="@+id/CercaF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Cerca" />
-
 
 </RelativeLayout>
