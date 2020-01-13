@@ -97,18 +97,21 @@ public class PopUpDetails extends AppCompatActivity {
             for (int i = 0; i < 3; i++) {
                stato.getChildAt(i).setEnabled(false);
             }
+            fab.setEnabled(false);
             break;
          case attiva:
             stato.check(R.id.radioButtonAttiva);
             for (int i = 0; i < 3; i++) {
                stato.getChildAt(i).setEnabled(true);
             }
+            fab.setEnabled(true);
             break;
          case disdetta:
             stato.check(R.id.radioButtonDisdetta);
             for (int i = 0; i < 3; i++) {
                stato.getChildAt(i).setEnabled(false);
             }
+            fab.setEnabled(false);
             break;
       }
 

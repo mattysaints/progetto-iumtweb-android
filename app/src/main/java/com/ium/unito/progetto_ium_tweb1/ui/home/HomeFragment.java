@@ -33,13 +33,13 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onStart() {
-        fab.hide();
+        //fab.hide();
         super.onStart();
     }
 
     @Override
     public void onStop() {
-        fab.show();
+        //fab.show();
         super.onStop();
     }
 }

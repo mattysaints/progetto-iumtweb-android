@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#FF9800</color>
+    <color name="stato_prenotazione_attiva">#00CC99</color>
+    <color name="stato_prenotazione_effettuata">#8C92AC</color>
+    <color name="stato_prenotazione_disdetta">#CB4154</color>
+
 </resources>
