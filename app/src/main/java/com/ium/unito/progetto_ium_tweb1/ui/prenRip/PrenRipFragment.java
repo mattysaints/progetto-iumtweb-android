@@ -26,14 +26,19 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PrenRipFragment extends Fragment {
+    private static final Gson gson = new Gson();
 
     private static List<Prenotazione> prenotazioni;
-    private static RecyclerView recyclerView;
-    private static RecyclerViewAdapter adapter;
-    private static final Gson gson = new Gson();
-    public static View viewLayout;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter adapter;
+    private View viewLayout;
     private AlertDialog alertDialog;
     private AlertDialog.Builder builder;
+
+    private CharSequence lastFilterDocente;
+    private CharSequence lastFilterCorso;
+    private int lastFilterOra;
+    private int lastFilterGiorno;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,11 +64,15 @@ public class PrenRipFragment extends Fragment {
             recyclerView.setHasFixedSize(true);
             adapter.notifyDataSetChanged();
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        lastFilterDocente = "";
+        lastFilterCorso = "";
+        lastFilterOra = 0;
+        lastFilterGiorno = 0;
+
         return root;
     }
 
@@ -87,21 +96,46 @@ public class PrenRipFragment extends Fragment {
             builder.setView(dialogView);
 
             final EditText docente = dialogView.findViewById(R.id.docente_et);
+            docente.setText(lastFilterDocente);
             final EditText corso = dialogView.findViewById(R.id.corso_et);
+            corso.setText(lastFilterCorso);
             final Spinner ora = dialogView.findViewById(R.id.ora_spinner);
+            ora.setSelection(lastFilterOra);
             final Spinner giorno = dialogView.findViewById(R.id.giorno_spinner);
+            giorno.setSelection(lastFilterGiorno);
 
             builder.setMessage("Filtra Ripetizioni");
             builder.setPositiveButton("Cerca", (dialogInterface, i) -> {
-                adapter.getFilter().filter((CharSequence)docente.getText().toString());
+                lastFilterDocente = docente.getText();
+                lastFilterCorso = corso.getText();
+                lastFilterOra = (int) ora.getSelectedItemId();
+                lastFilterGiorno = (int) giorno.getSelectedItemId();
+                filterPrenotazioni();
                 dialogInterface.dismiss();
             });
-            builder.setNegativeButton("Cancella", (dialogInterface, i) -> dialogInterface.dismiss());
+            builder.setNegativeButton("Cancella", (dialogInterface, i) -> {
+                lastFilterDocente = "";
+                lastFilterCorso = "";
+                lastFilterOra = 0;
+                lastFilterGiorno = 0;
+                filterPrenotazioni();
+                dialogInterface.dismiss();
+            });
             alertDialog = builder.create();
             alertDialog.show();
         }
 
         return false;
+    }
+
+    private void filterPrenotazioni() {
+        StringBuilder filterBuilder = new StringBuilder();
+        filterBuilder
+                .append(lastFilterDocente.toString().replace(" ", "+")).append("_")
+                .append(lastFilterCorso).append("_")
+                .append(lastFilterOra).append("_")
+                .append(lastFilterGiorno);
+        adapter.getFilter().filter(filterBuilder);
     }
 
 }
