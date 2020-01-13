@@ -9,105 +9,87 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_row"
+        android:layout_height="105dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="5dp"
-        android:elevation="4dp"
-        android:padding="2dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:elevation="10dp"
+        android:paddingVertical="10dp"
         app:cardBackgroundColor="#edf0fa"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/Docente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="20dp"
-                android:text="Docente :"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/image_books"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/books_decoration"
+                android:padding="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/books_image" />
 
-            <TextView
-                android:id="@+id/Corso"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linerar_layout_docente_corso"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/Docente"
-                android:layout_marginTop="0dp"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:text="Corso : "
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/Giorno"
+                android:layout_below="@id/image_books"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/image_books"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/Ora"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:text="Giorno : "
-                android:textStyle="bold" />
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/Ora"
+                <TextView
+                    android:id="@+id/docente_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_gdocenti"
+                    android:drawablePadding="30dp"
+                    android:paddingHorizontal="30dp"
+                    android:paddingTop="5dp"
+                    android:text="docente" />
+
+                <TextView
+                    android:id="@+id/corso_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_gcorsi"
+                    android:drawablePadding="30dp"
+                    android:paddingHorizontal="30dp"
+                    android:paddingTop="5dp"
+                    android:text="corso" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_below="@id/linerar_layout_docente_corso"
+                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/image_books"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="right"
-                android:paddingVertical="20dp"
-                android:paddingLeft="70dp"
-                android:text="Ora : "
-                android:textStyle="bold" />
+                android:paddingHorizontal="5dp">
 
-            <TextView
-                android:id="@+id/DocenteText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/Docente"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="20dp"
-                android:text="TextView" />
+                <TextView
+                    android:id="@+id/giorno_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/clock"
+                    android:drawablePadding="30dp"
+                    android:paddingStart="30dp"
+                    android:text="giorno" />
 
-            <TextView
-                android:id="@+id/CorsoText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/DocenteText"
-                android:layout_marginTop="0dp"
-                android:layout_toRightOf="@+id/Corso"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:text="TextView" />
+                <TextView
+                    android:id="@+id/ora_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/giorno_text_view"
+                    android:paddingStart="30dp"
+                    android:text="ora" />
 
-            <TextView
-                android:id="@+id/OraText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@+id/Ora"
-                android:gravity="right"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="20dp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/GiornoText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/OraText"
-                android:layout_marginTop="0dp"
-                android:layout_toRightOf="@id/Giorno"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:text="TextView" />
-
+            </RelativeLayout>
 
         </RelativeLayout>
 

@@ -149,4 +149,5 @@
     <!-- filtri -->
     <string name="ora_spinner_text">Ora</string>
     <string name="giorno_spinner_text">Giorno</string>
+    <string name="books_decoration">Books decoration</string>
 </resources>

@@ -121,10 +121,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            docente = itemView.findViewById(R.id.DocenteText);
-            corso = itemView.findViewById(R.id.CorsoText);
-            giorno = itemView.findViewById(R.id.GiornoText);
-            ora = itemView.findViewById(R.id.OraText);
+            docente = itemView.findViewById(R.id.docente_text_view);
+            corso = itemView.findViewById(R.id.corso_text_view);
+            giorno = itemView.findViewById(R.id.giorno_text_view);
+            ora = itemView.findViewById(R.id.ora_text_view);
             touch_layout = itemView.findViewById(R.id.touch_layout);
         }
     }
