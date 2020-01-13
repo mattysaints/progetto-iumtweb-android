@@ -93,7 +93,7 @@ public class PrenRipFragment extends Fragment {
 
             builder.setMessage("Filtra Ripetizioni");
             builder.setPositiveButton("Cerca", (dialogInterface, i) -> {
-                filtraRipetizioni(docente.getText().toString(), corso.getText().toString(), ora.getSelectedItem().toString(), giorno.getSelectedItem().toString());
+                adapter.getFilter().filter((CharSequence)docente.getText().toString());
                 dialogInterface.dismiss();
             });
             builder.setNegativeButton("Cancella", (dialogInterface, i) -> dialogInterface.dismiss());
@@ -104,7 +104,4 @@ public class PrenRipFragment extends Fragment {
         return false;
     }
 
-    private void filtraRipetizioni(String docente, String corso, String ora, String giorno) {
-        //CODICE FILTRAGGIO PRENOTAZIONI
-    }
 }

@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,16 +22,20 @@ import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.entities.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
 
     private List<Prenotazione> prenotazioni;
+    private List<Prenotazione> prenF;
     private Context context;
 
     public RecyclerViewAdapter(List<Prenotazione> prenotazioni, Context context) {
         this.prenotazioni = prenotazioni;
         this.context = context;
+        prenF = new ArrayList<>(prenotazioni);
     }
 
     @NonNull
@@ -66,6 +72,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return prenotazioni.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+
+            List<Prenotazione> filteredList = new ArrayList<>();
+            if (charSequence.toString().isEmpty())
+                filteredList.addAll(prenF);
+            else {
+                for (Prenotazione prenotazione : prenF) {
+                    if (prenotazione.getDocente().getCognome().toString().contains(charSequence))
+                        filteredList.add(prenotazione);
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            prenotazioni.clear();
+            prenotazioni.addAll((Collection<? extends Prenotazione>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
