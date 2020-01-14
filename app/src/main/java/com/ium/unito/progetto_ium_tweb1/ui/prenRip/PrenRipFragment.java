@@ -1,6 +1,7 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,10 +78,6 @@ public class PrenRipFragment extends Fragment {
         return root;
     }
 
-    public static void delete(Prenotazione prenotazione) {
-        prenotazioni.remove(prenotazione);
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.prenrip, menu);
@@ -128,6 +126,14 @@ public class PrenRipFragment extends Fragment {
         return false;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == DetailsActivity.PASS_DELETED_ITEM) {
+            int position = data.getIntExtra("deleted_item", -1);
+            adapter.removeItem(position);
+        }
+    }
+
     private void filterPrenotazioni() {
         StringBuilder filterBuilder = new StringBuilder();
         filterBuilder
@@ -137,5 +143,4 @@ public class PrenRipFragment extends Fragment {
                 .append(lastFilterGiorno);
         adapter.getFilter().filter(filterBuilder);
     }
-
 }

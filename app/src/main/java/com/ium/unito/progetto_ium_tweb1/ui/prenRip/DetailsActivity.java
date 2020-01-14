@@ -1,6 +1,7 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,27 +22,31 @@ import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-public class DettailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
+    public static final int PASS_DELETED_ITEM = 1;
+    public static final int DELETED_ITEM = 0;
 
     private TextView docente;
     private TextView corso;
     private TextView giorno;
     private TextView ora;
-    private CollapsingToolbarLayout toolbar_layout;
     private Gson gson = new Gson();
     private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dettails);
+        setContentView(R.layout.activity_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         CollapsingToolbarLayout toolbar_layout = findViewById(R.id.toolbar_layout);
         toolbar_layout.setTitle("Ripetizione");
 
-        final Prenotazione prenotazione = (Prenotazione) getIntent().getExtras().getSerializable("prenotazione");
+        Bundle bundle = getIntent().getExtras();
+        final Prenotazione prenotazione = (Prenotazione) bundle.getSerializable("prenotazione");
+        final int position = bundle.getInt("position");
+        final RecyclerViewAdapter adapter = (RecyclerViewAdapter) bundle.getSerializable("adapter");
 
         pref = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);  //va in crash se fai il login e poi vai per prenotare
         String user = pref.getString("username","");
@@ -63,7 +68,9 @@ public class DettailsActivity extends AppCompatActivity {
                 try {
                     String result = task.get();
                     if (Boolean.parseBoolean(result)) {
-                        PrenRipFragment.delete(prenotazione);
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("deleted_item", position);
+                        setResult(DELETED_ITEM, resultIntent);
                         Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     } else {

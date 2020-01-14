@@ -20,7 +20,7 @@
 
         </activity>
         <activity
-            android:name=".ui.prenRip.DettailsActivity"
+            android:name=".ui.prenRip.DetailsActivity"
             android:label="@string/title_activity_dettails"
             android:theme="@style/AppTheme.NoActionBar">
 

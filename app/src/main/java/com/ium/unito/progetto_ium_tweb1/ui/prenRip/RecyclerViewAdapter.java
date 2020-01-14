@@ -1,6 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,12 +19,13 @@ import com.ium.unito.progetto_ium_tweb1.entities.Giorno;
 import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
 import com.ium.unito.progetto_ium_tweb1.entities.Slot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable, Serializable {
     private List<Prenotazione> prenotazioniFiltered;
     private List<Prenotazione> prenotazioni;
     private Context context;
@@ -52,9 +53,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.touch_layout.setOnClickListener(view -> {
             notifyItemChanged(holder.getAdapterPosition());
-            Intent dettailsIntent = new Intent(context, DettailsActivity.class);
-            dettailsIntent.putExtra("prenotazione", getItem(position));
-            context.startActivity(dettailsIntent);
+            Intent detailsIntent = new Intent(context, DetailsActivity.class);
+            detailsIntent.putExtra("prenotazione", getItem(position));
+            ((Activity) context).startActivityForResult(detailsIntent, DetailsActivity.PASS_DELETED_ITEM);
         });
     }
 
@@ -65,6 +66,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return prenotazioniFiltered.size();
+    }
+
+    public void removeItem(int position) {
+        prenotazioni.remove(position);
+        prenotazioniFiltered.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
