@@ -118,7 +118,7 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
         String line = in.readLine();
 
         while (line != null) {
-            builder.append(line).append("\n");
+            builder.append(line);
             line = in.readLine();
         }
 
