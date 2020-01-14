@@ -48,7 +48,7 @@ public class PopUpDetails extends AppCompatActivity {
       fab.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-            String op;
+            String op="disdire";
             switch (stato.getCheckedRadioButtonId()) {
                case R.id.radioButtonAttiva:
                   Toast.makeText(getApplicationContext(),"Lo tua prenotazione è già attiva", Toast.LENGTH_LONG).show();
@@ -56,7 +56,6 @@ public class PopUpDetails extends AppCompatActivity {
                case R.id.radioButtonEffettuata:
                   op="effettuare";
                case R.id.radioButtonDisdetta:
-                  op="disdire";
                   HashMap<String, String> params = new HashMap<>();
                   String[] ops = {op};
                   params.put("ops", gson.toJson(ops));
@@ -67,6 +66,7 @@ public class PopUpDetails extends AppCompatActivity {
                   try {
                      if(task.get().equals("true")) {
                         Toast.makeText(getApplicationContext(), "Stato della prenotazione cambiato con successo", Toast.LENGTH_LONG).show();
+
                      } else {
                         Toast.makeText(getApplicationContext(), "Errore durante il cambio di stato della prenotazione ", Toast.LENGTH_LONG).show();
                      }

@@ -139,6 +139,8 @@
     <string name="stato_prenotazione_attiva">attiva</string>
     <string name="stato_prenotazione_effettuata">effettuata</string>
     <string name="stato_prenotazione_disdetta">disdetta</string>
+
+    <!-- altre -->
     <string name="logo">Logo</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
