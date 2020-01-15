@@ -59,13 +59,6 @@
         android:paddingHorizontal="100dp"
         app:title="  Ora">
 
-
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/reply_ora"
-            android:entryValues="@array/reply_Ovalues"
-            android:key="list_preference_1"
-            android:title="List preference" />
         <ListPreference
             app:defaultValue="reply"
             app:entries="@array/reply_ora"
@@ -91,6 +84,23 @@
             app:entries="@array/reply_entries"
             app:entryValues="@array/reply_values"
             android:title="Seleziona Giorno"
+            app:key="reply"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="auto"
+        android:paddingHorizontal="100dp"
+        app:title="  Stato">
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/spinner_entries_stato"
+            app:entryValues="@array/spinner_entries_stato"
+            android:title="Seleziona Stato"
             app:key="reply"
             app:useSimpleSummaryProvider="true" />
 

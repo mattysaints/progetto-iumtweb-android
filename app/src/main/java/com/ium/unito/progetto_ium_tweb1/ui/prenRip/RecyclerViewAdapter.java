@@ -1,8 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +48,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.corso.setText(prenotazione.getCorso().getTitolo());
         holder.giorno.setText(prenotazione.getGiorno().toString());
         holder.ora.setText(prenotazione.getSlot().toString());
-
         holder.touch_layout.setOnClickListener(view -> {
             notifyItemChanged(holder.getAdapterPosition());
             Intent detailsIntent = new Intent(context, DetailsActivity.class);
             detailsIntent.putExtra("prenotazione", getItem(position));
             ((Activity) context).startActivityForResult(detailsIntent, DetailsActivity.PASS_DELETED_ITEM);
         });
+
     }
 
     public Prenotazione getItem(int position) {

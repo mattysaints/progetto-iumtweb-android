@@ -44,7 +44,7 @@ public class PrenRipFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_prenrip, container, false);
+        View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
         setHasOptionsMenu(true);
 
         String url = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili"; //testato e funziona anche la class taskjson
