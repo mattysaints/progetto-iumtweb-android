@@ -137,10 +137,10 @@ public class PrenRipFragment extends Fragment {
     private void filterPrenotazioni() {
         StringBuilder filterBuilder = new StringBuilder();
         filterBuilder
-                .append(lastFilterDocente.toString().replace(" ", "+")).append("_")
-                .append(lastFilterCorso).append("_")
-                .append(lastFilterOra).append("_")
-                .append(lastFilterGiorno);
+            .append(lastFilterDocente.toString().replace(" ", "+")).append("_")
+            .append(lastFilterCorso).append("_")
+            .append(lastFilterOra).append("_")
+            .append(lastFilterGiorno);
         adapter.getFilter().filter(filterBuilder);
     }
 }

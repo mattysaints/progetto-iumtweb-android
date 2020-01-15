@@ -39,10 +39,10 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
    @Override
    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
       final Prenotazione prenotazione = prenotazioni.get(position);
-      StringBuilder docente = new StringBuilder(prenotazione.getDocente().getNome());
-      docente.append(" ");
-      docente.append(prenotazione.getDocente().getCognome());
-      holder.docente.setText(docente.toString());
+      if(prenotazione.getDocente()!=null)
+         holder.docente.setText(prenotazione.getDocente().toString());
+      else
+         holder.docente.setText(R.string.docente_eliminato);
       holder.corso.setText(prenotazione.getCorso().getTitolo());
       holder.giorno.setText(prenotazione.getGiorno().toString());
       holder.ora.setText(prenotazione.getSlot().toString());

@@ -48,7 +48,7 @@ public class DetailsActivity extends AppCompatActivity {
         final int position = bundle.getInt("position");
         final RecyclerViewAdapter adapter = (RecyclerViewAdapter) bundle.getSerializable("adapter");
 
-        pref = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);  //va in crash se fai il login e poi vai per prenotare
+        pref = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);
         String user = pref.getString("username","");
         Utente utente = new Utente(user, null, null);
         prenotazione.setUtente(utente);
@@ -57,8 +57,6 @@ public class DetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             try {
                 HashMap<String, String> params = new HashMap<>();
-                //params.put("op", "prenotare");
-                //params.put("prenotazioni", gson.toJson(prenotazione));
                 String[] ops = {"prenotare"};
                 params.put("ops", gson.toJson(ops));
                 Prenotazione[] prens = {prenotazione};
@@ -71,7 +69,7 @@ public class DetailsActivity extends AppCompatActivity {
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("deleted_item", position);
                         setResult(DELETED_ITEM, resultIntent);
-                        Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     } else {
                         Toast.makeText(getApplicationContext(), "Errore durante la prenotazione ", Toast.LENGTH_LONG).show();
