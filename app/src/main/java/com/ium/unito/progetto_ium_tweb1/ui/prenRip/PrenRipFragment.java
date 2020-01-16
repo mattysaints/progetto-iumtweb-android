@@ -18,22 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ium.unito.progetto_ium_tweb1.R;
-import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class PrenRipFragment extends Fragment {
-    private static final Gson gson = new Gson();
 
-    private static List<Prenotazione> prenotazioni;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
-    private View viewLayout;
     private AlertDialog alertDialog;
     private AlertDialog.Builder builder;
 
@@ -42,33 +32,18 @@ public class PrenRipFragment extends Fragment {
     private int lastFilterOra;
     private int lastFilterGiorno;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
         setHasOptionsMenu(true);
-
-        String url = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili"; //testato e funziona anche la class taskjson
-
-        try {
-            String p = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax(url, "POST", null)).get();
-            prenotazioni = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
-            }.getType());
-            //System.out.println("le prenotazioni: " + prenotazioni);
-
-            viewLayout = root.findViewById(R.id.viewLayout);
-            recyclerView = root.findViewById(R.id.recyclerView);
-            builder = new AlertDialog.Builder(root.getContext());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            adapter = new RecyclerViewAdapter(prenotazioni,root.getContext());
-            recyclerView.setAdapter(adapter);
-            recyclerView.setHasFixedSize(true);
-            adapter.notifyDataSetChanged();
-
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        recyclerView = root.findViewById(R.id.recyclerView);
+        builder = new AlertDialog.Builder(root.getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new RecyclerViewAdapter(root.getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        adapter.notifyDataSetChanged();
 
         lastFilterDocente = "";
         lastFilterCorso = "";

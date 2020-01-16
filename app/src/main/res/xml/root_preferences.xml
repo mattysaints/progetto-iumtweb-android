@@ -18,6 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
+        android:id="@+id/filter_docente"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="auto"
@@ -33,63 +34,67 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:id="@+id/filter_corso"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="auto"
-        app:icon="@drawable/ic_gcorsi"
         android:paddingHorizontal="100dp"
+        app:icon="@drawable/ic_gcorsi"
         app:title="  Corso">
 
 
         <ListPreference
+            android:title="Seleziona Corso"
             app:defaultValue="reply"
             app:entries="@array/reply_entries"
             app:entryValues="@array/reply_values"
-            android:title="Seleziona Corso"
             app:key="reply"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:id="@+id/filter_ora"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="auto"
-        app:icon="@drawable/ic_time"
         android:paddingHorizontal="100dp"
+        app:icon="@drawable/ic_time"
         app:title="  Ora">
 
         <ListPreference
+            android:entries="@array/reply_ora"
+            android:title="Seleziona Ora"
             app:defaultValue="reply"
             app:entries="@array/reply_ora"
             app:entryValues="@array/reply_Ovalues"
-            android:entries="@array/reply_ora"
-            android:title="Seleziona Ora"
             app:key="reply"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:id="@+id/filter_giorno"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="auto"
-        app:icon="@drawable/ic_day"
         android:paddingHorizontal="100dp"
+        app:icon="@drawable/ic_day"
         app:title="  Giorno">
 
 
         <ListPreference
+            android:title="Seleziona Giorno"
             app:defaultValue="reply"
             app:entries="@array/reply_entries"
             app:entryValues="@array/reply_values"
-            android:title="Seleziona Giorno"
             app:key="reply"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:id="@+id/filter_stato"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="auto"
@@ -97,10 +102,10 @@
         app:title="  Stato">
 
         <ListPreference
+            android:title="Seleziona Stato"
             app:defaultValue="reply"
             app:entries="@array/spinner_entries_stato"
             app:entryValues="@array/spinner_entries_stato"
-            android:title="Seleziona Stato"
             app:key="reply"
             app:useSimpleSummaryProvider="true" />
 
