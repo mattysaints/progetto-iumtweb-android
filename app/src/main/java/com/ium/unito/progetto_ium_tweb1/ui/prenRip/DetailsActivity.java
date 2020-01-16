@@ -92,6 +92,4 @@ public class DetailsActivity extends AppCompatActivity {
         giorno.setText(prenotazione.getGiorno().toString());
         ora.setText(prenotazione.getSlot().toString());
     }
-
-
 }

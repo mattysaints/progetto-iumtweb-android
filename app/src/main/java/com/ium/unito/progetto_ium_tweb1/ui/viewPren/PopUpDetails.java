@@ -3,7 +3,6 @@ package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +35,7 @@ public class PopUpDetails extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_dettagli_prenotazione);
-      Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       Toolbar toolbar = findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
 
       CollapsingToolbarLayout toolbar_layout = findViewById(R.id.toolbar_layout);
@@ -44,39 +43,34 @@ public class PopUpDetails extends AppCompatActivity {
 
       final Prenotazione prenotazione = (Prenotazione) getIntent().getExtras().getSerializable("prenotazione");
 
-      FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //per salvare lo stato della prenotazione
-      fab.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-            String op="disdire";
-            switch (stato.getCheckedRadioButtonId()) {
+       FloatingActionButton fab = findViewById(R.id.fab); //per salvare lo stato della prenotazione
+       fab.setOnClickListener(view -> {
+           String op = "disdire";
+           switch (stato.getCheckedRadioButtonId()) {
                case R.id.radioButtonAttiva:
-                  Toast.makeText(getApplicationContext(),"Lo tua prenotazione è già attiva", Toast.LENGTH_LONG).show();
-                  break;
+                   Toast.makeText(getApplicationContext(), "Lo tua prenotazione è già attiva", Toast.LENGTH_LONG).show();
+                   break;
                case R.id.radioButtonEffettuata:
-                  op="effettuare";
+                   op = "effettuare";
                case R.id.radioButtonDisdetta:
-                  HashMap<String, String> params = new HashMap<>();
-                  String[] ops = {op};
-                  params.put("ops", gson.toJson(ops));
-                  Prenotazione[] prens = {prenotazione};
-                  params.put("prenotazioni", gson.toJson(prens));
+                   HashMap<String, String> params = new HashMap<>();
+                   String[] ops = {op};
+                   params.put("ops", gson.toJson(ops));
+                   Prenotazione[] prens = {prenotazione};
+                   params.put("prenotazioni", gson.toJson(prens));
 
-                  AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
-                  try {
-                     if(task.get().equals("true")) {
-                        Toast.makeText(getApplicationContext(), "Stato della prenotazione cambiato con successo", Toast.LENGTH_LONG).show();
+                   AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
+                   try {
+                       if (task.get().equals("true")) {
+                           Toast.makeText(getApplicationContext(), "Stato della prenotazione cambiato con successo", Toast.LENGTH_LONG).show();
 
-                     } else {
-                        Toast.makeText(getApplicationContext(), "Errore durante il cambio di stato della prenotazione ", Toast.LENGTH_LONG).show();
-                     }
-                  } catch (ExecutionException e) {
-                     e.printStackTrace();
-                  } catch (InterruptedException e) {
-                     e.printStackTrace();
-                  }
-                  onBackPressed();
-            }
+                       } else {
+                           Toast.makeText(getApplicationContext(), "Errore durante il cambio di stato della prenotazione ", Toast.LENGTH_LONG).show();
+                       }
+                   } catch (ExecutionException | InterruptedException e) {
+                       e.printStackTrace();
+                   }
+                   onBackPressed();
          }
       });
 
@@ -115,20 +109,15 @@ public class PopUpDetails extends AppCompatActivity {
             break;
       }
 
-      stato.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-         @Override
-         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch (checkedId) {
+       stato.setOnCheckedChangeListener((group, checkedId) -> {
+           switch (checkedId) {
                case R.id.radioButtonEffettuata:
-                  break;
+                   break;
                case R.id.radioButtonAttiva:
-                  break;
+                   break;
                case R.id.radioButtonDisdetta:
-                  break;
-            }
+                   break;
          }
       });
    }
-
-
 }

@@ -77,13 +77,13 @@ public class Login extends AppCompatActivity {
             pref = getSharedPreferences("user_information", MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("username", username.getText().toString());
-            String ad = response.get("admin");
-            assert ad!=null;
-            editor.putBoolean("admin", ad.equals("true"));
-            String osp = response.get("ospite");
-            assert osp!=null;
-            editor.putBoolean("ospite", osp.equals("true"));
-            editor.commit();
+            String admin = response.get("admin");
+            assert admin != null;
+            editor.putBoolean("admin", admin.equals("true"));
+            String ospite = response.get("ospite");
+            assert ospite != null;
+            editor.putBoolean("ospite", ospite.equals("true"));
+            editor.apply();
 
             Intent homepageIntent = new Intent(this, Homepage.class);
             homepageIntent.putExtra("username", usr);
