@@ -152,4 +152,6 @@
     <string name="ora_spinner_text">Ora</string>
     <string name="giorno_spinner_text">Giorno</string>
     <string name="books_decoration">Books decoration</string>
+    <string name="label_service">Ripetizioni</string>
+    <string name="icona_di_studente">Icona di studente</string>
 </resources>
