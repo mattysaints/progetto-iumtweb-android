@@ -15,11 +15,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.prenRip.FilterActivity"
-            android:label="Filtra Ripetizioni">
-
-        </activity>
-        <activity
             android:name=".ui.prenRip.DetailsActivity"
             android:label="@string/title_activity_dettails"
             android:theme="@style/AppTheme.NoActionBar">

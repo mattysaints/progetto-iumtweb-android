@@ -99,6 +99,7 @@
         android:layout_height="match_parent"
         android:focusable="auto"
         android:paddingHorizontal="100dp"
+        app:icon="@drawable/ic_stato"
         app:title="  Stato">
 
         <ListPreference

@@ -3,42 +3,50 @@ package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ium.unito.progetto_ium_tweb1.R;
-import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-
-import java.util.List;
 
 public class ViewPrenFragment extends Fragment {
 
-    private static List<Prenotazione> prenotazioni;
-    private static RecyclerView recyclerView;
-    private static RecyclerViewAdapterStorico adapter;
-    public static Context baseContext;
-    public static View viewLayout;
+   private static RecyclerView recyclerView;
+   private static RecyclerViewAdapterStorico adapter;
+   private static Context baseContext;
+   private static View viewLayout;
+   private CharSequence lastFilterDocente;
+   private CharSequence lastFilterCorso;
+   private int lastFilterOra;
+   private int lastFilterGiorno;
+   private int lastFilterStato;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
-        recyclerView = root.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecyclerViewAdapterStorico(root.getContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        adapter.notifyDataSetChanged();
-        return root;
-    }
+   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+      View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
+      recyclerView = root.findViewById(R.id.recyclerView);
+      LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
+      linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+      recyclerView.setLayoutManager(linearLayoutManager);
+      adapter = new RecyclerViewAdapterStorico(root.getContext());
+      recyclerView.setAdapter(adapter);
+      recyclerView.setHasFixedSize(true);
+      adapter.notifyDataSetChanged();
+      baseContext = root.getContext();
+      return root;
+   }
 
-/*   @Override
-   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+   @Override
+   public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
       inflater.inflate(R.menu.prenrip, menu);
       super.onCreateOptionsMenu(menu, inflater);
    }
@@ -47,7 +55,7 @@ public class ViewPrenFragment extends Fragment {
    public boolean onOptionsItemSelected(MenuItem item) {
       int id = item.getItemId();
       if (id == R.id.filtra) {
-         builder = new AlertDialog.Builder(getContext());
+         AlertDialog.Builder builder = new AlertDialog.Builder(baseContext);
          LayoutInflater inflater = this.getLayoutInflater();
          View dialogView = inflater.inflate(R.layout.dialog_layout, null);
          builder.setView(dialogView);
@@ -60,6 +68,8 @@ public class ViewPrenFragment extends Fragment {
          ora.setSelection(lastFilterOra);
          final Spinner giorno = dialogView.findViewById(R.id.giorno_spinner);
          giorno.setSelection(lastFilterGiorno);
+         final Spinner stato = dialogView.findViewById(R.id.filter_stato);
+         stato.setSelection(lastFilterStato);
 
          builder.setMessage("Filtra Ripetizioni");
          builder.setPositiveButton("Cerca", (dialogInterface, i) -> {
@@ -67,6 +77,7 @@ public class ViewPrenFragment extends Fragment {
             lastFilterCorso = corso.getText();
             lastFilterOra = (int) ora.getSelectedItemId();
             lastFilterGiorno = (int) giorno.getSelectedItemId();
+            lastFilterStato = (int) stato.getSelectedItemId();
             filterPrenotazioni();
             dialogInterface.dismiss();
          });
@@ -75,22 +86,15 @@ public class ViewPrenFragment extends Fragment {
             lastFilterCorso = "";
             lastFilterOra = 0;
             lastFilterGiorno = 0;
+            lastFilterStato = 0;
             filterPrenotazioni();
             dialogInterface.dismiss();
          });
-         alertDialog = builder.create();
+         AlertDialog alertDialog = builder.create();
          alertDialog.show();
       }
 
       return false;
-   }
-
-   @Override
-   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-      if (requestCode == DetailsActivity.PASS_DELETED_ITEM) {
-         int position = data.getIntExtra("deleted_item", -1);
-         adapter.removeItem(position);
-      }
    }
 
    private void filterPrenotazioni() {
@@ -99,7 +103,8 @@ public class ViewPrenFragment extends Fragment {
             .append(lastFilterDocente.toString().replace(" ", "+")).append("_")
             .append(lastFilterCorso).append("_")
             .append(lastFilterOra).append("_")
-            .append(lastFilterGiorno);
+            .append(lastFilterGiorno).append("_")
+            .append(lastFilterStato);
       adapter.getFilter().filter(filterBuilder);
-   }*/
+   }
 }
