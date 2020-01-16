@@ -7,9 +7,9 @@ public enum Stato implements Serializable {
     //es. Slot.SLOT1.name --> LUN
     //Mentre per visualizzare il risultato nell'interfaccia grafica useremo il metodo toString
 
-    effettuata,
-    attiva, //prenotata
-    disdetta;
+    EFFETTUATA,
+    ATTIVA, //prenotata
+    DISDETTA;
 
     @Override
     public String toString() {

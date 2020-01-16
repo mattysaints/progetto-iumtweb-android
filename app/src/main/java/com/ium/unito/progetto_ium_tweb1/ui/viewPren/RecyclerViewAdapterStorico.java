@@ -86,13 +86,13 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
         holder.giorno.setText(prenotazione.getGiorno().toString());
         holder.ora.setText(prenotazione.getSlot().toString());
         switch (prenotazione.getStato()) {
-            case effettuata:
+            case EFFETTUATA:
                 holder.card.setCardBackgroundColor(context.getColor(R.color.stato_prenotazione_effettuata));
                 break;
-            case attiva:
+            case ATTIVA:
                 holder.card.setBackgroundColor(context.getColor(R.color.stato_prenotazione_attiva));
                 break;
-            case disdetta:
+            case DISDETTA:
                 holder.card.setBackgroundColor(context.getColor(R.color.stato_prenotazione_disdetta));
                 break;
         }
