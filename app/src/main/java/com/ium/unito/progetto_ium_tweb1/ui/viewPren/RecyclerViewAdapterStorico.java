@@ -29,7 +29,8 @@ import java.util.concurrent.ExecutionException;
 
 public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerViewAdapterStorico.MyViewHolder> {
 
-   private List<Prenotazione> prenotazioni;
+   private List<Prenotazione> prenotazioniVisibili;
+   private List<Prenotazione> prenotazioniNonVisibili;
    private Context context;
    private SharedPreferences pref;
    private static final Gson gson = new Gson();
@@ -46,9 +47,9 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
          par.put("utente", gson.toJson(u, Utente.class));
          try {
             String p = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax(url, "POST", par)).get();
-            prenotazioni = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
+            prenotazioniVisibili = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
             }.getType());
-            System.out.println("le prenotazioni: " + prenotazioni);
+            System.out.println("le prenotazioniVisibili: " + prenotazioniVisibili);
 
          } catch (ExecutionException e) {
             e.printStackTrace();
@@ -73,8 +74,8 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
 
    @Override
    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-      final Prenotazione prenotazione = prenotazioni.get(position);
-      if(prenotazione.getDocente()!=null)
+      final Prenotazione prenotazione = prenotazioniVisibili.get(position);
+      if(prenotazione.getDocente().getCognome()!=null && prenotazione.getDocente().getNome()!=null)
          holder.docente.setText(prenotazione.getDocente().toString());
       else
          holder.docente.setText(R.string.docente_eliminato);
@@ -104,12 +105,12 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
    }
 
    public Prenotazione getItem(int position) {
-      return prenotazioni.get(position);
+      return prenotazioniVisibili.get(position);
    }
 
    @Override
    public int getItemCount() {
-      return prenotazioni.size();
+      return prenotazioniVisibili.size();
    }
 
    public static class MyViewHolder extends RecyclerView.ViewHolder{
