@@ -9,11 +9,8 @@
         android:layout_width="match_parent"
         style="@style/TextAppearance.MaterialComponents.Headline4"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:textAlignment="center"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="20dp"
         android:text="@string/label_service"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +19,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_margin="20dp"
         android:layout_below="@id/text_home"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/icona_di_studente"
@@ -32,10 +30,10 @@
     <TextView
         android:id="@+id/user_textView"
         android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
-        android:paddingVertical="20dp"
         android:text="utente"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -137,4 +135,20 @@
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/info_prossima_prenotazione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/card_prossima_prenotazione"
+        android:padding="10dp"
+        android:text="Prossima prenotazione"
+        android:textStyle="bold" />
+
+    <include
+        android:id="@+id/card_prossima_prenotazione"
+        layout="@layout/layout_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>
