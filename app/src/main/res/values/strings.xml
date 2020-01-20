@@ -155,4 +155,8 @@
     <string name="label_service">Ripetizioni</string>
     <string name="icona_di_studente">Icona di studente</string>
     <string name="no_prenotazioni">Non hai prenotazioni attive</string>
+    <string name="ospite_welcome">Hai fatto acesso come ospite</string>
+    <string name="prossima_prenotazione">Prossima prenotazione</string>
+    <string name="ripetizioni_disponibili">Ripetizioni disponibili</string>
+    <string name="storico_prenotazioni">Storico prenotazioni</string>
 </resources>

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.card.MaterialCardView;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.model.Giorno;
 import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
@@ -43,6 +44,7 @@ public class HomepageFragment extends Fragment {
     private TextView numPrenotazioniDisdette;
     private TextView numCorsi;
 
+    private MaterialCardView cardInfoPrentazioni;
     private RelativeLayout cardProssimaPrenotazione;
     private TextView infoProssimaPrenotazione;
     private ImageView image;
@@ -57,6 +59,7 @@ public class HomepageFragment extends Fragment {
         FragmentActivity activity = getActivity();
         SharedPreferences preferences = null;
         String username = null;
+        boolean ospite = false;
 
         if (activity != null) {
             preferences = activity.getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
@@ -65,9 +68,11 @@ public class HomepageFragment extends Fragment {
         if (preferences != null) {
             storicoViewModel.setPreferences(preferences);
             username = preferences.getString("username", "Ospite");
+            ospite = preferences.getBoolean("ospite", false);
         }
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        infoProssimaPrenotazione = root.findViewById(R.id.info_prossima_prenotazione);
         userTextView = root.findViewById(R.id.user_textView);
         userTextView.setText(username);
         numPrenotazioni = root.findViewById(R.id.num_pren);
@@ -75,16 +80,22 @@ public class HomepageFragment extends Fragment {
         numPrenotazioniEffettuate = root.findViewById(R.id.num_effettuate);
         numPrenotazioniDisdette = root.findViewById(R.id.num_disdette);
         numCorsi = root.findViewById(R.id.num_corsi);
-        cardProssimaPrenotazione = root.findViewById(R.id.card_prossima_prenotazione);
-        infoProssimaPrenotazione = root.findViewById(R.id.info_prossima_prenotazione);
         image = root.findViewById(R.id.image_books);
         docenteTextView = root.findViewById(R.id.docente_text_view);
         corsoTextView = root.findViewById(R.id.corso_text_view);
         giornoTextView = root.findViewById(R.id.giorno_text_view);
         oraTextView = root.findViewById(R.id.ora_text_view);
+        cardProssimaPrenotazione = root.findViewById(R.id.card_prossima_prenotazione);
+        cardInfoPrentazioni = root.findViewById(R.id.info_prenotazioni);
 
-        storicoViewModel.getPrenotazioni().observe(this, this::setInfo);
-
+        if (!ospite) {
+            storicoViewModel.getPrenotazioni().observe(this, this::setInfo);
+        } else {
+            infoProssimaPrenotazione.setText(getString(R.string.ospite_welcome));
+            infoProssimaPrenotazione.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            cardProssimaPrenotazione.setVisibility(View.INVISIBLE);
+            cardInfoPrentazioni.setVisibility(View.INVISIBLE);
+        }
         return root;
     }
 

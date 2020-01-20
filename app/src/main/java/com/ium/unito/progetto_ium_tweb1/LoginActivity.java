@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private TextView result;
-    private SharedPreferences pref;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password_et);
         result = findViewById(R.id.result);
 
+        preferences = getSharedPreferences("user_information", MODE_PRIVATE);
         AsyncHttpRequest.initSessionManagement();
     }
 
@@ -73,25 +74,29 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (response != null && response.get("result") != null && Boolean.parseBoolean(response.get("result"))) {
-            // result.setText("Autenticazione avvenuta con successo");
-            pref = getSharedPreferences("user_information", MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("admin", Boolean.parseBoolean(response.get("admin")));
+            editor.putBoolean("ospite", false);
             editor.putString("username", username.getText().toString());
-            String admin = response.get("admin");
-            assert admin != null;
-            editor.putBoolean("admin", admin.equals("true"));
-            String ospite = response.get("ospite");
-            assert ospite != null;
-            editor.putBoolean("ospite", ospite.equals("true"));
             editor.apply();
 
             Intent homepageIntent = new Intent(this, HomepageActivity.class);
-            homepageIntent.putExtra("username", usr);
             startActivity(homepageIntent);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Credenziali inserite non corrette!", Toast.LENGTH_LONG);
             toast.show();
             password.setText("");
         }
+    }
+
+    public void autenticationOspite(View view) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("admin", false);
+        editor.putBoolean("ospite", true);
+        editor.putString("username", "Ospite");
+        editor.apply();
+
+        Intent homepageIntent = new Intent(this, HomepageActivity.class);
+        startActivity(homepageIntent);
     }
 }
