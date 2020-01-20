@@ -1,4 +1,4 @@
-package com.ium.unito.progetto_ium_tweb1.entities;
+package com.ium.unito.progetto_ium_tweb1.model;
 
 import java.io.Serializable;
 
