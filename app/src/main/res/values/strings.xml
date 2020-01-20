@@ -3,7 +3,7 @@
     <string name="app_name">Ripetizioni</string>
     <string name="form_error">Compilare questo campo</string>
 
-    <!-- stringhe activity Login -->
+    <!-- stringhe activity LoginActivity -->
     <string name="welcome_text">Ripetizioni.it</string>
     <string name="login_label">LOGIN</string>
     <string name="username_textview">Username: </string>
@@ -154,4 +154,5 @@
     <string name="books_decoration">Books decoration</string>
     <string name="label_service">Ripetizioni</string>
     <string name="icona_di_studente">Icona di studente</string>
+    <string name="no_prenotazioni">Non hai prenotazioni attive</string>
 </resources>

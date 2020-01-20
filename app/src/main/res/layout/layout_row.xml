@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_row"
         android:layout_height="105dp"
         android:layout_width="match_parent"
@@ -16,6 +16,8 @@
         android:elevation="10dp"
         android:paddingVertical="10dp"
         app:cardBackgroundColor="@color/card_color"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="4dp"
         app:cardCornerRadius="5dp">
 
         <RelativeLayout
@@ -93,7 +95,7 @@
 
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 
