@@ -58,9 +58,9 @@
     </string-array>
     <string-array name="spinner_entries_stato">
         <item>Qualsiasi stato</item>
-        <item>attiva</item>
-        <item>effettuata</item>
-        <item>disdetta</item>
+        <item>Effettuata</item>
+        <item>Attiva</item>
+        <item>Disdetta</item>
     </string-array>
 
 </resources>

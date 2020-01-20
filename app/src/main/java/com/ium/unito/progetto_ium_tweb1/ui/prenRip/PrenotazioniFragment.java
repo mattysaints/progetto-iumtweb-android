@@ -79,6 +79,7 @@ public class PrenotazioniFragment extends Fragment {
             ora.setSelection(lastFilterOra);
             final Spinner giorno = dialogView.findViewById(R.id.giorno_spinner);
             giorno.setSelection(lastFilterGiorno);
+            dialogView.findViewById(R.id.stato_spinner).setVisibility(View.GONE);
 
             builder.setMessage("Filtra Ripetizioni");
             builder.setPositiveButton("Cerca", (dialogInterface, i) -> {

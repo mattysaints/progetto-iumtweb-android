@@ -86,7 +86,6 @@ public class DetailsActivity extends AppCompatActivity {
         corso = findViewById(R.id.corDettailsText);
         giorno = findViewById(R.id.giorDettailsText);
         ora = findViewById(R.id.oraDettailsText);
-
         docente.setText(prenotazione.getDocente().toString());
         corso.setText(prenotazione.getCorso().getTitolo());
         giorno.setText(prenotazione.getGiorno().toString());

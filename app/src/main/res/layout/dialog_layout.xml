@@ -41,4 +41,12 @@
         android:entries="@array/spinner_entries_giorno"
         android:paddingVertical="12dp" />
 
+    <Spinner
+        android:id="@+id/stato_spinner"
+        android:layout_width="match_parent"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:layout_height="wrap_content"
+        android:entries="@array/spinner_entries_stato"
+        android:paddingVertical="12dp" />
+
 </LinearLayout>

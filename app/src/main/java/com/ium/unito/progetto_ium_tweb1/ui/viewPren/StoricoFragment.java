@@ -78,7 +78,7 @@ public class StoricoFragment extends Fragment {
          ora.setSelection(lastFilterOra);
          final Spinner giorno = dialogView.findViewById(R.id.giorno_spinner);
          giorno.setSelection(lastFilterGiorno);
-         final Spinner stato = dialogView.findViewById(R.id.filter_stato);
+         final Spinner stato = dialogView.findViewById(R.id.stato_spinner);
          stato.setSelection(lastFilterStato);
 
          builder.setMessage("Filtra Ripetizioni");
