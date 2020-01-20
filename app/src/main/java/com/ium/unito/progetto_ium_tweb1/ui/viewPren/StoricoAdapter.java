@@ -3,7 +3,6 @@ package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,61 +10,36 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.android.material.card.MaterialCardView;
 import com.ium.unito.progetto_ium_tweb1.R;
-import com.ium.unito.progetto_ium_tweb1.entities.Giorno;
-import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.entities.Slot;
-import com.ium.unito.progetto_ium_tweb1.entities.Stato;
-import com.ium.unito.progetto_ium_tweb1.entities.Utente;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
+import com.ium.unito.progetto_ium_tweb1.model.Giorno;
+import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
+import com.ium.unito.progetto_ium_tweb1.model.Slot;
+import com.ium.unito.progetto_ium_tweb1.model.Stato;
+import com.ium.unito.progetto_ium_tweb1.ui.home.StoricoViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
-public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerViewAdapterStorico.MyViewHolder> implements Filterable {
-
-    private static final Gson gson = new Gson();
+public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHolder> implements Filterable {
+    private Context context;
+    private StoricoViewModel storicoViewModel;
     private List<Prenotazione> prenotazioniVisibili;
     private List<Prenotazione> prenotazioniNonVisibili;
-    private Context context;
 
 
-    public RecyclerViewAdapterStorico(Context context) {
-        String url = "http://10.0.2.2:8080/progetto_ium_tweb2/StoricoPrenotazioni";
-        SharedPreferences pref = context.getSharedPreferences("user_information", Context.MODE_PRIVATE);
-        String user = pref.getString("username", "");
-        if (!user.isEmpty()) {
-            Map<String, String> par = new HashMap<>();
-            Utente u = new Utente(user, null, null);
-            par.put("utente", gson.toJson(u, Utente.class));
-            try {
-                String p = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax(url, "POST", par)).get();
-                prenotazioniVisibili = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
-                }.getType());
-                prenotazioniNonVisibili = new ArrayList<>(0);
-                System.out.println("le prenotazioniVisibili: " + prenotazioniVisibili);
-
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast t = new Toast(context);
-            t.setText("Richiesta al server fallita");
-            t.show();
-        }
+    public StoricoAdapter(Context context, StoricoViewModel storicoViewModel) {
         this.context = context;
+        this.storicoViewModel = storicoViewModel;
+
+        prenotazioniVisibili = storicoViewModel.getPrenotazioni().getValue();
+        prenotazioniNonVisibili = new ArrayList<>();
+        // System.out.println("le prenotazioniVisibili: " + prenotazioniVisibili);
     }
 
     @NonNull
@@ -87,18 +61,18 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
         holder.ora.setText(prenotazione.getSlot().toString());
         switch (prenotazione.getStato()) {
             case EFFETTUATA:
-                holder.card.setCardBackgroundColor(context.getColor(R.color.stato_prenotazione_effettuata));
+                holder.card.setStrokeColor(context.getColor(R.color.stato_prenotazione_effettuata));
                 break;
             case ATTIVA:
-                holder.card.setBackgroundColor(context.getColor(R.color.stato_prenotazione_attiva));
+                holder.card.setStrokeColor(context.getColor(R.color.stato_prenotazione_attiva));
                 break;
             case DISDETTA:
-                holder.card.setBackgroundColor(context.getColor(R.color.stato_prenotazione_disdetta));
+                holder.card.setStrokeColor(context.getColor(R.color.stato_prenotazione_disdetta));
                 break;
         }
         holder.touch_layout.setOnClickListener(view -> {
             notifyItemChanged(holder.getAdapterPosition());
-            Intent detailsIntent = new Intent(context, PopUpDetails.class);
+            Intent detailsIntent = new Intent(context, DetailsActivity.class);
             detailsIntent.putExtra("prenotazione", getItem(position));
             context.startActivity(detailsIntent);
         });
@@ -187,7 +161,7 @@ public class RecyclerViewAdapterStorico extends RecyclerView.Adapter<RecyclerVie
         TextView giorno;
         TextView ora;
         RelativeLayout touch_layout;
-        CardView card;
+        MaterialCardView card;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -12,35 +12,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ium.unito.progetto_ium_tweb1.R;
-import com.ium.unito.progetto_ium_tweb1.entities.Giorno;
-import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.entities.Slot;
-import com.ium.unito.progetto_ium_tweb1.entities.Stato;
-import com.ium.unito.progetto_ium_tweb1.entities.Utente;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
+import com.ium.unito.progetto_ium_tweb1.model.Giorno;
+import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
+import com.ium.unito.progetto_ium_tweb1.model.Slot;
+import com.ium.unito.progetto_ium_tweb1.model.Stato;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class HomeFragment extends Fragment {
+/**
+ * Fragment della homepage
+ */
+public class HomepageFragment extends Fragment {
     private static final Calendar calendar = Calendar.getInstance();
-    private static final Gson gson = new Gson();
 
-    private HomeViewModel homeViewModel;
-    private SharedPreferences preferences;
-    private List<Prenotazione> prenotazioniUtente;
+    private StoricoViewModel storicoViewModel;
 
     private TextView userTextView;
     private TextView numPrenotazioni;
@@ -57,15 +51,25 @@ public class HomeFragment extends Fragment {
     private TextView giornoTextView;
     private TextView oraTextView;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FragmentActivity activity = getActivity();
+        SharedPreferences preferences = null;
+        String username = null;
+
+        if (activity != null) {
+            preferences = activity.getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
+            storicoViewModel = ViewModelProviders.of(activity).get(StoricoViewModel.class);
+        }
+        if (preferences != null) {
+            storicoViewModel.setPreferences(preferences);
+            username = preferences.getString("username", "Ospite");
+        }
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-        preferences = getActivity().getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
-
         userTextView = root.findViewById(R.id.user_textView);
-        userTextView.setText(preferences.getString("username", "Ospite"));
+        userTextView.setText(username);
         numPrenotazioni = root.findViewById(R.id.num_pren);
         numPrenotazioniAttive = root.findViewById(R.id.num_attive);
         numPrenotazioniEffettuate = root.findViewById(R.id.num_effettuate);
@@ -79,23 +83,19 @@ public class HomeFragment extends Fragment {
         giornoTextView = root.findViewById(R.id.giorno_text_view);
         oraTextView = root.findViewById(R.id.ora_text_view);
 
-        String url = "http://10.0.2.2:8080/progetto_ium_tweb2/StoricoPrenotazioni";
-        Map<String, String> params = new HashMap<>();
-        Utente utente = new Utente(preferences.getString("username", "ospite"), null, null);
-        params.put("utente", gson.toJson(utente, Utente.class));
-        try {
-            String result = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax(url, "POST", params)).get();
-            prenotazioniUtente = gson.fromJson(result, new TypeToken<List<Prenotazione>>() {
-            }.getType());
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        setInfo();
+        storicoViewModel.getPrenotazioni().observe(this, this::setInfo);
+
         return root;
     }
 
-    private void setInfo() {
-        Supplier<Stream<Prenotazione>> supplier = () -> prenotazioniUtente.parallelStream();
+    /**
+     * Dato lo stato corrente delle prenotazioni, calcola le statistiche e fa update della UI
+     *
+     * @param prenotazioni: prenotazioni correnti
+     */
+    private void setInfo(List<Prenotazione> prenotazioni) {
+        Supplier<Stream<Prenotazione>> supplier = prenotazioni::parallelStream;
+
         long countPrenotazioniEffettuate = supplier.get().filter(p -> p.getStato() == Stato.EFFETTUATA).count();
         long countPrenotazioniAttive = supplier.get().filter(p -> p.getStato() == Stato.ATTIVA).count();
         long countPrenotazioniDisdette = supplier.get().filter(p -> p.getStato() == Stato.DISDETTA).count();
@@ -129,12 +129,15 @@ public class HomeFragment extends Fragment {
             oraTextView.setText(prossima.getSlot().toString());
             giornoTextView.setText(prossima.getGiorno().toString());
         } else {
-            infoProssimaPrenotazione.setText("Non hai prenotazioni attive");
+            infoProssimaPrenotazione.setText(getString(R.string.no_prenotazioni));
             cardProssimaPrenotazione.setVisibility(View.INVISIBLE);
         }
-
     }
 
+    /**
+     * Calcola il prossimo giorno in cui potrebbe esserci una prenotazione
+     * @return giorno
+     */
     private Giorno nextGiorno() {
         calendar.setTime(new Date());
         int giornoIndex = (calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7;
@@ -147,6 +150,10 @@ public class HomeFragment extends Fragment {
         return giorno;
     }
 
+    /**
+     * Calcola il prossimo slot in cui potrebbe esserci una prenotazione
+     * @return slot
+     */
     private Slot nextSlot() {
         calendar.setTime(new Date());
         int ora = calendar.get(Calendar.HOUR_OF_DAY);
@@ -158,5 +165,4 @@ public class HomeFragment extends Fragment {
             slot = Slot.fromInt(ora);
         return slot;
     }
-
 }

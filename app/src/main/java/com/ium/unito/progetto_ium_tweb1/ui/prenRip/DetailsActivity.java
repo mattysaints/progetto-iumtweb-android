@@ -15,8 +15,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.ium.unito.progetto_ium_tweb1.R;
-import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.entities.Utente;
+import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
+import com.ium.unito.progetto_ium_tweb1.model.Utente;
 import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public class DetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final Prenotazione prenotazione = (Prenotazione) bundle.getSerializable("prenotazione");
         final int position = bundle.getInt("position");
-        final RecyclerViewAdapter adapter = (RecyclerViewAdapter) bundle.getSerializable("adapter");
+        final PrenotazioniAdapter adapter = (PrenotazioniAdapter) bundle.getSerializable("adapter");
 
         pref = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);
         String user = pref.getString("username","");

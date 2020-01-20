@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private static final Gson gson = new Gson();
 
 
@@ -85,7 +85,7 @@ public class Login extends AppCompatActivity {
             editor.putBoolean("ospite", ospite.equals("true"));
             editor.apply();
 
-            Intent homepageIntent = new Intent(this, Homepage.class);
+            Intent homepageIntent = new Intent(this, HomepageActivity.class);
             homepageIntent.putExtra("username", usr);
             startActivity(homepageIntent);
         } else {

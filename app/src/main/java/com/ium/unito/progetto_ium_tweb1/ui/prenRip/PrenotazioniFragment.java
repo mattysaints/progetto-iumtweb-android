@@ -15,16 +15,15 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ium.unito.progetto_ium_tweb1.R;
 
-public class PrenRipFragment extends Fragment {
-
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
-    private AlertDialog alertDialog;
+public class PrenotazioniFragment extends Fragment {
+    private PrenotazioniViewModel prenotazioniViewModel;
+    private PrenotazioniAdapter adapter;
     private AlertDialog.Builder builder;
 
     private CharSequence lastFilterDocente;
@@ -33,17 +32,21 @@ public class PrenRipFragment extends Fragment {
     private int lastFilterGiorno;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        prenotazioniViewModel = ViewModelProviders.of(this).get(PrenotazioniViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
         setHasOptionsMenu(true);
-        recyclerView = root.findViewById(R.id.recyclerView);
+
         builder = new AlertDialog.Builder(root.getContext());
+
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecyclerViewAdapter(root.getContext());
+
+        adapter = new PrenotazioniAdapter(root.getContext(), prenotazioniViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-        adapter.notifyDataSetChanged();
 
         lastFilterDocente = "";
         lastFilterCorso = "";
@@ -54,7 +57,7 @@ public class PrenRipFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.prenrip, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -94,7 +97,7 @@ public class PrenRipFragment extends Fragment {
                 filterPrenotazioni();
                 dialogInterface.dismiss();
             });
-            alertDialog = builder.create();
+            AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
 

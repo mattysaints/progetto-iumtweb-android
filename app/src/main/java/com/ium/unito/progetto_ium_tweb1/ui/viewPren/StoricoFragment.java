@@ -14,17 +14,21 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ium.unito.progetto_ium_tweb1.R;
+import com.ium.unito.progetto_ium_tweb1.ui.home.StoricoViewModel;
 
-public class ViewPrenFragment extends Fragment {
+public class StoricoFragment extends Fragment {
+
+   private static StoricoAdapter adapter;
 
    private static RecyclerView recyclerView;
-   private static RecyclerViewAdapterStorico adapter;
-   private static Context baseContext;
-   private static View viewLayout;
+   private StoricoViewModel storicoViewModel;
+   private Context baseContext;
    private CharSequence lastFilterDocente;
    private CharSequence lastFilterCorso;
    private int lastFilterOra;
@@ -32,16 +36,22 @@ public class ViewPrenFragment extends Fragment {
    private int lastFilterStato;
 
    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+      FragmentActivity activity = getActivity();
+      if (activity != null)
+         storicoViewModel = ViewModelProviders.of(activity).get(StoricoViewModel.class);
+
       View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
-      recyclerView = root.findViewById(R.id.recyclerView);
+      setHasOptionsMenu(true);
       LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
       linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+      recyclerView = root.findViewById(R.id.recyclerView);
       recyclerView.setLayoutManager(linearLayoutManager);
-      adapter = new RecyclerViewAdapterStorico(root.getContext());
+      baseContext = root.getContext();
+      adapter = new StoricoAdapter(baseContext, storicoViewModel);
       recyclerView.setAdapter(adapter);
       recyclerView.setHasFixedSize(true);
       adapter.notifyDataSetChanged();
-      baseContext = root.getContext();
+
       return root;
    }
 

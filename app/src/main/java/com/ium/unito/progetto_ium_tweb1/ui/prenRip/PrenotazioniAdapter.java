@@ -15,38 +15,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ium.unito.progetto_ium_tweb1.R;
-import com.ium.unito.progetto_ium_tweb1.entities.Giorno;
-import com.ium.unito.progetto_ium_tweb1.entities.Prenotazione;
-import com.ium.unito.progetto_ium_tweb1.entities.Slot;
-import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
+import com.ium.unito.progetto_ium_tweb1.model.Giorno;
+import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
+import com.ium.unito.progetto_ium_tweb1.model.Slot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable, Serializable {
+public class PrenotazioniAdapter extends RecyclerView.Adapter<PrenotazioniAdapter.MyViewHolder> implements Filterable, Serializable {
+   private Context context;
+   private PrenotazioniViewModel prenotazioniViewModel;
    private List<Prenotazione> prenotazioniVisibili;
    private List<Prenotazione> prenotazioniNonVisibili;
-   private Context context;
    private final Gson gson = new Gson();
 
-   public RecyclerViewAdapter(Context context) {
+   public PrenotazioniAdapter(Context context, PrenotazioniViewModel prenotazioniViewModel) {
       this.context = context;
-      String url = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili"; //testato e funziona anche la class taskjson
+      this.prenotazioniViewModel = prenotazioniViewModel;
 
-      try {
-         String p = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax(url, "POST", null)).get();
-         prenotazioniVisibili = gson.fromJson(p, new TypeToken<List<Prenotazione>>() {
-         }.getType());
-         //System.out.println("le prenotazioniNonVisibili: " + prenotazioniNonVisibili);
-      } catch (ExecutionException | InterruptedException e) {
-         e.printStackTrace();
-      }
-
+      prenotazioniVisibili = prenotazioniViewModel.getPrenotazioni().getValue();
       prenotazioniNonVisibili = new ArrayList<>(0);
    }
 

@@ -23,8 +23,15 @@ import java.util.Map;
  * Task che esegue una generica post e restituise il risultato
  */
 public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, String> {
+    // server URLs
+    public static final String URL_STORICO_PRENOTAZIONI = "http://10.0.2.2:8080/progetto_ium_tweb2/StoricoPrenotazioni";
+    public static final String URL_RIPETIZIONI_DISPONIBILI = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili";
+
     private static boolean initialized = false;
 
+    /**
+     * Inizializza la gestione dei cookie, così che la sessione lato server sia mantenuta
+     */
     public static void initSessionManagement() {
         if (initialized)
             return;
@@ -43,6 +50,9 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
      */
     @Override
     protected String doInBackground(Ajax... ajaxs) {
+        if (ajaxs.length > 1)
+            throw new UnsupportedOperationException("This operation only supports one ajax");
+
         HttpURLConnection connection = null;
         BufferedReader in = null;
         BufferedWriter out = null;
