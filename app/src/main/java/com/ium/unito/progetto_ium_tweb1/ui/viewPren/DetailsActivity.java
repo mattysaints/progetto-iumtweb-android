@@ -1,6 +1,5 @@
 package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.RadioGroup;
@@ -22,26 +21,28 @@ import java.util.concurrent.ExecutionException;
 
 public class DetailsActivity extends AppCompatActivity {
 
+   public static final int ATTIVA = 0;
+   public static final int DISDETTA = 1;
+   public static final int EFFETTUATA = 2;
    private TextView docente;
    private TextView corso;
    private TextView giorno;
    private TextView ora;
    private RadioGroup stato;
-   private CollapsingToolbarLayout toolbar_layout;
+   private Prenotazione prenotazione;
    private Gson gson = new Gson();
-   private SharedPreferences pref;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_dettagli_prenotazione);
-       Toolbar toolbar = findViewById(R.id.toolbar);
+      Toolbar toolbar = findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
 
       CollapsingToolbarLayout toolbar_layout = findViewById(R.id.toolbar_layout);
       toolbar_layout.setTitle("Prenotazione");
 
-      final Prenotazione prenotazione = (Prenotazione) getIntent().getExtras().getSerializable("prenotazione");
+      prenotazione = (Prenotazione) getIntent().getExtras().getSerializable("prenotazione");
 
        FloatingActionButton fab = findViewById(R.id.fab); //per salvare lo stato della prenotazione
        fab.setOnClickListener(view -> {

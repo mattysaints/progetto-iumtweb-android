@@ -15,6 +15,7 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
      * Ottiene il risultato dal server
      *
      * @param ajaxs: contiene url, method e params
-     * @return true se il login è avvenuto con successo
+     * @return oggetto che viene passato dalla servlet se l'operazione è avvenuta con successo, null altrimenti
      */
     @Override
     protected String doInBackground(Ajax... ajaxs) {
@@ -62,6 +63,7 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
             connection = (HttpURLConnection) ajax.url.openConnection();
             connection.setRequestMethod(ajax.method);
             connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
 
             String params;
             if (ajax.params==null)
@@ -75,9 +77,12 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
             in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             response = decodeResponse(in);
 
+        }catch (SocketTimeoutException e) {
+            //server down
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
                 if (out != null)
                     out.close();
@@ -91,6 +96,7 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
         }
         return response;
     }
+
 
     /**
      * Converte la mappa di parametri in una stringa
@@ -138,7 +144,7 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
     public static class Ajax {
         URL url;
         String method;
-        public Map<String,String> params;
+        Map<String,String> params;
 
         public Ajax(@NonNull String url) {
             try {

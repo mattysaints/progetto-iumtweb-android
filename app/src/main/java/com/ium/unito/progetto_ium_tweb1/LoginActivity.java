@@ -72,8 +72,12 @@ public class LoginActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-        if (response != null && response.get("result") != null && Boolean.parseBoolean(response.get("result"))) {
+        if (response == null){
+            //server down
+            Toast toast = Toast.makeText(getApplicationContext(), "Il server non è attivo!", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else if (response.get("result") != null && Boolean.parseBoolean(response.get("result"))) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("admin", Boolean.parseBoolean(response.get("admin")));
             editor.putBoolean("ospite", false);
