@@ -15,7 +15,6 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -25,6 +24,8 @@ import java.util.Map;
  */
 public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, String> {
     // server URLs
+    public static final String URL_LOGIN = "http://10.0.2.2:8080/progetto_ium_tweb2/Login";
+    private static final int CONNECTION_TIMEOUT = 2000;
     public static final String URL_STORICO_PRENOTAZIONI = "http://10.0.2.2:8080/progetto_ium_tweb2/StoricoPrenotazioni";
     public static final String URL_RIPETIZIONI_DISPONIBILI = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili";
 
@@ -63,7 +64,7 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
             connection = (HttpURLConnection) ajax.url.openConnection();
             connection.setRequestMethod(ajax.method);
             connection.setDoOutput(true);
-            connection.setConnectTimeout(2000);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
             String params;
             if (ajax.params==null)
@@ -77,12 +78,9 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
             in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             response = decodeResponse(in);
 
-        }catch (SocketTimeoutException e) {
-            //server down
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (out != null)
                     out.close();

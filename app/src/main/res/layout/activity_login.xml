@@ -78,12 +78,13 @@
                 android:textStyle="bold" />
 
             <TextView
-                style="@android:style/TextAppearance.Holo"
                 android:onClick="autenticationOspite"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/design_default_color_primary_dark"
+                android:textColor="#39974F"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/ospite"
                 android:textAlignment="center" />
 

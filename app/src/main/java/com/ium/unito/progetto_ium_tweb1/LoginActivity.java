@@ -23,7 +23,6 @@ import java.util.concurrent.ExecutionException;
 public class LoginActivity extends AppCompatActivity {
     private static final Gson gson = new Gson();
 
-
     private EditText username;
     private EditText password;
     private TextView result;
@@ -63,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         params.put("username", usr);
         params.put("password", psw);
         AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest();
-        task.execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/Login", "POST", params));
+        task.execute(new AsyncHttpRequest.Ajax(AsyncHttpRequest.URL_LOGIN, "POST", params));
         Map<String, String> response = null;
         try {
             response = gson.fromJson(task.get(), new TypeToken<Map<String, String>>() {
@@ -72,9 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        if (response == null){
-            //server down
-            Toast toast = Toast.makeText(getApplicationContext(), "Il server non è attivo!", Toast.LENGTH_LONG);
+        if (response == null) { // server down
+            Toast toast = Toast.makeText(getApplicationContext(), "Connessione scaduta", Toast.LENGTH_LONG);
             toast.show();
         }
         else if (response.get("result") != null && Boolean.parseBoolean(response.get("result"))) {
@@ -87,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent homepageIntent = new Intent(this, HomepageActivity.class);
             startActivity(homepageIntent);
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Credenziali inserite non corrette!", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), "Credenziali inserite non corrette", Toast.LENGTH_LONG);
             toast.show();
             password.setText("");
         }
