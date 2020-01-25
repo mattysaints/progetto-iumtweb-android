@@ -2,6 +2,7 @@ package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +15,9 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +35,20 @@ public class PrenotazioniFragment extends Fragment {
     private int lastFilterGiorno;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        prenotazioniViewModel = ViewModelProviders.of(this).get(PrenotazioniViewModel.class);
+        FragmentActivity activity = getActivity();
+        SharedPreferences preferences = null;
+        String username = null;
+        boolean ospite = false;
+
+        if (activity != null) {
+            preferences = activity.getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
+            prenotazioniViewModel = ViewModelProviders.of(activity).get(PrenotazioniViewModel.class);
+        }
+        if (preferences != null) {
+            prenotazioniViewModel.setPreferences(preferences);
+            username = preferences.getString("username", "Ospite");
+            ospite = preferences.getBoolean("ospite", false);
+        }
 
         View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
         setHasOptionsMenu(true);
@@ -89,8 +105,7 @@ public class PrenotazioniFragment extends Fragment {
                 lastFilterGiorno = (int) giorno.getSelectedItemId();
                 filterPrenotazioni();
                 dialogInterface.dismiss();
-            });
-            builder.setNegativeButton("Cancella", (dialogInterface, i) -> {
+            }).setNegativeButton("Cancella", (dialogInterface, i) -> {
                 lastFilterDocente = "";
                 lastFilterCorso = "";
                 lastFilterOra = 0;

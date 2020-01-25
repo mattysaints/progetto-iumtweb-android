@@ -1,6 +1,7 @@
 package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -37,9 +39,19 @@ public class StoricoFragment extends Fragment {
 
    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       FragmentActivity activity = getActivity();
-      if (activity != null)
-         storicoViewModel = ViewModelProviders.of(activity).get(StoricoViewModel.class);
+      SharedPreferences preferences = null;
+      String username = null;
+      boolean ospite = false;
 
+      if (activity != null) {
+         preferences = activity.getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
+         storicoViewModel = ViewModelProviders.of(activity).get(StoricoViewModel.class);
+      }
+      if (preferences != null) {
+         storicoViewModel.setPreferences(preferences);
+         username = preferences.getString("username", "Ospite");
+         ospite = preferences.getBoolean("ospite", false);
+      }
       View root = inflater.inflate(R.layout.fragment_list_prenotazioni, container, false);
       setHasOptionsMenu(true);
       LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
