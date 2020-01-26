@@ -28,6 +28,7 @@ public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, Str
     private static final int CONNECTION_TIMEOUT = 2000;
     public static final String URL_STORICO_PRENOTAZIONI = "http://10.0.2.2:8080/progetto_ium_tweb2/StoricoPrenotazioni";
     public static final String URL_RIPETIZIONI_DISPONIBILI = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili";
+    public static final String URL_OP_SU_PRENOTAZIONI = "http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni";
 
     private static boolean initialized = false;
 

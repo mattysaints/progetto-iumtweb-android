@@ -6,14 +6,10 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -46,7 +42,7 @@ public class HomepageActivity extends AppCompatActivity{
         NavigationUI.setupWithNavController(navigationView, navController);
 
         TextView usernameTextView = navigationView.getHeaderView(0).findViewById(R.id.user_textView);
-        SharedPreferences preferences = getSharedPreferences(Preference.class.getName(),MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("user_information", MODE_PRIVATE);
         String username = preferences.getString("username", "Ospite");
         usernameTextView.setText("Benvenuto/a " + username);
 
@@ -71,9 +67,8 @@ public class HomepageActivity extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
-    public void gotoLogin(View view){
+    public void gotoLogin(MenuItem item) {
         Intent homepageIntent = new Intent(this, LoginActivity.class);
         startActivity(homepageIntent);
     }
-
 }
