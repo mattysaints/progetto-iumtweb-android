@@ -1,4 +1,4 @@
-package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
+package com.ium.unito.progetto_ium_tweb1.ui.prenotazioni;
 
 import android.content.SharedPreferences;
 

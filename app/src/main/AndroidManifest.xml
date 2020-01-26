@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.prenRip.DetailsActivity"
+            android:name=".ui.prenotazioni.DetailsActivity"
             android:label="@string/title_activity_dettails"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -36,7 +36,7 @@
         </activity>
 
         <activity
-            android:name=".ui.viewPren.DetailsActivity"
+            android:name=".ui.storico.DetailsActivity"
             android:label="PopUpDetails"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

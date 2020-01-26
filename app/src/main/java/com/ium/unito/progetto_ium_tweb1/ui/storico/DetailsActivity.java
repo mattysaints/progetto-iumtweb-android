@@ -1,4 +1,4 @@
-package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
+package com.ium.unito.progetto_ium_tweb1.ui.storico;
 
 import android.content.Intent;
 import android.os.AsyncTask;

@@ -1,5 +1,4 @@
-package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
-
+package com.ium.unito.progetto_ium_tweb1.ui.prenotazioni;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,35 +13,29 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.model.Giorno;
 import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
 import com.ium.unito.progetto_ium_tweb1.model.Slot;
-import com.ium.unito.progetto_ium_tweb1.model.Stato;
-import com.ium.unito.progetto_ium_tweb1.ui.home.StoricoViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHolder> implements Filterable {
+public class PrenotazioniAdapter extends RecyclerView.Adapter<PrenotazioniAdapter.MyViewHolder> implements Filterable, Serializable {
     private Fragment fragment;
-    private StoricoViewModel storicoViewModel;
+    private PrenotazioniViewModel prenotazioniViewModel;
     private List<Prenotazione> prenotazioniVisibili;
 
-
-    public StoricoAdapter(Fragment fragment, StoricoViewModel storicoViewModel) {
+    public PrenotazioniAdapter(PrenotazioniFragment fragment, PrenotazioniViewModel prenotazioniViewModel) {
         this.fragment = fragment;
-        this.storicoViewModel = storicoViewModel;
+        this.prenotazioniViewModel = prenotazioniViewModel;
         initPrenotazioniVisibili();
-
-        this.storicoViewModel.getPrenotazioni().observe(fragment,
-                prenotazioni -> notifyDataSetChanged());
     }
 
     private void initPrenotazioniVisibili() {
-        List<Prenotazione> prenotazioni = storicoViewModel.getPrenotazioni().getValue();
+        List<Prenotazione> prenotazioni = prenotazioniViewModel.getPrenotazioni().getValue();
         if (prenotazioni != null)
             prenotazioniVisibili = new ArrayList<>(prenotazioni);
         else
@@ -59,32 +52,19 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final Prenotazione prenotazione = prenotazioniVisibili.get(position);
-        if (prenotazione.getDocente().getCognome() != null && prenotazione.getDocente().getNome() != null)
-            holder.docente.setText(prenotazione.getDocente().toString());
-        else
-            holder.docente.setText(R.string.docente_eliminato);
+        holder.docente.setText(prenotazione.getDocente().toString());
         holder.corso.setText(prenotazione.getCorso().getTitolo());
         holder.giorno.setText(prenotazione.getGiorno().toString());
         holder.ora.setText(prenotazione.getSlot().toString());
-        switch (prenotazione.getStato()) {
-            case EFFETTUATA:
-                holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_effettuata));
-                break;
-            case ATTIVA:
-                holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_attiva));
-                break;
-            case DISDETTA:
-                holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_disdetta));
-                break;
-        }
         holder.touchLayout.setOnClickListener(view -> {
             Intent detailsIntent = new Intent(fragment.getContext(), DetailsActivity.class);
             detailsIntent.putExtra(DetailsActivity.PRENOTAZIONE_EXTRA, getItem(position));
-            fragment.startActivityForResult(detailsIntent, DetailsActivity.CODE_STORICO);
+            fragment.startActivityForResult(detailsIntent, DetailsActivity.CODE_PRENOTA);
         });
+
     }
 
-    private Prenotazione getItem(int position) {
+    public Prenotazione getItem(int position) {
         return prenotazioniVisibili.get(position);
     }
 
@@ -98,12 +78,10 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                // formato: <ricerca_docente>_<ricerca_corso>_<indice_ora>_<indice_giorno>_<indice_stato>
+                initPrenotazioniVisibili();
+
+                // formato: <ricerca_docente>_<ricerca_corso>_<indice_ora>_<indice_giorno>
                 String[] filterString = ((String) charSequence).split("_");
-                List<Prenotazione> prenotazioni = storicoViewModel.getPrenotazioni().getValue();
-                if (prenotazioni == null)
-                    return null;
-                prenotazioniVisibili = new ArrayList<>(prenotazioni);
 
                 if (!filterString[0].isEmpty()) {
                     String[] docente = filterString[0].split("\\+");
@@ -129,13 +107,6 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
                     prenotazioniVisibili.removeIf(prenotazione ->
                             prenotazione.getGiorno() != giorni[giornoIndex - 1]);
                 }
-
-                int statoIndex = Integer.parseInt(filterString[4]);
-                if (statoIndex != 0) {
-                    Stato[] stati = Stato.values();
-                    prenotazioniVisibili.removeIf(prenotazione ->
-                            prenotazione.getStato() != stati[statoIndex - 1]);
-                }
                 return null;
             }
 
@@ -147,12 +118,11 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView docente;
-        TextView corso;
-        TextView giorno;
-        TextView ora;
-        RelativeLayout touchLayout;
-        MaterialCardView card;
+        private TextView docente;
+        private TextView corso;
+        private TextView giorno;
+        private TextView ora;
+        private RelativeLayout touchLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -161,7 +131,6 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
             giorno = itemView.findViewById(R.id.giorno_text_view);
             ora = itemView.findViewById(R.id.ora_text_view);
             touchLayout = itemView.findViewById(R.id.touch_layout);
-            card = itemView.findViewById(R.id.card_row);
         }
     }
 }

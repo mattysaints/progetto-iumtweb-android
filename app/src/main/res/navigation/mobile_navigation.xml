@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.ium.unito.progetto_ium_tweb1.ui.prenRip.PrenotazioniFragment"
+        android:name="com.ium.unito.progetto_ium_tweb1.ui.prenotazioni.PrenotazioniFragment"
         android:label="Prenotare una ripetizione"
         tools:layout="@layout/fragment_list_prenotazioni" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.ium.unito.progetto_ium_tweb1.ui.viewPren.StoricoFragment"
+        android:name="com.ium.unito.progetto_ium_tweb1.ui.storico.StoricoFragment"
         android:label="Visualizza le tue prenotazioni"
         tools:layout="@layout/fragment_list_prenotazioni" />
 </navigation>
