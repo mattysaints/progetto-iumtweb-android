@@ -1,5 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.RadioGroup;
@@ -14,111 +15,130 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.ium.unito.progetto_ium_tweb1.R;
 import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
+import com.ium.unito.progetto_ium_tweb1.model.Stato;
 import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 public class DetailsActivity extends AppCompatActivity {
+    public static final String STATO_EXTRA = "storico.stato";
+    public static final String PRENOTAZIONE_EXTRA = "storico.prenotazione";
+    public static final String INDEX_PRENOTAZIONE_EXTRA = "storico.index_prenotazione";
+    public static final int CODE_STORICO = 2;
+    public static final int CODE_OK = 0;
 
-   public static final int ATTIVA = 0;
-   public static final int DISDETTA = 1;
-   public static final int EFFETTUATA = 2;
-   private TextView docente;
-   private TextView corso;
-   private TextView giorno;
-   private TextView ora;
-   private RadioGroup stato;
-   private Prenotazione prenotazione;
-   private Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
-   @Override
-   protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_dettagli_prenotazione);
-      Toolbar toolbar = findViewById(R.id.toolbar);
-      setSupportActionBar(toolbar);
+    private TextView docente;
+    private TextView corso;
+    private TextView giorno;
+    private TextView ora;
+    private RadioGroup stato;
+    private Prenotazione prenotazione;
+    private int indexPrenotazione;
 
-      CollapsingToolbarLayout toolbar_layout = findViewById(R.id.toolbar_layout);
-      toolbar_layout.setTitle("Prenotazione");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_dettagli_prenotazione);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-      prenotazione = (Prenotazione) getIntent().getExtras().getSerializable("prenotazione");
+        CollapsingToolbarLayout toolbarLayout = findViewById(R.id.toolbar_layout);
+        toolbarLayout.setTitle("Prenotazione");
 
-       FloatingActionButton fab = findViewById(R.id.fab); //per salvare lo stato della prenotazione
-       fab.setOnClickListener(view -> {
-           String op = "disdire";
-           switch (stato.getCheckedRadioButtonId()) {
-               case R.id.radioButtonAttiva:
-                   Toast.makeText(getApplicationContext(), "Lo tua prenotazione è già attiva", Toast.LENGTH_LONG).show();
-                   break;
-               case R.id.radioButtonEffettuata:
-                   op = "effettuare";
-               case R.id.radioButtonDisdetta:
-                   HashMap<String, String> params = new HashMap<>();
-                   String[] ops = {op};
-                   params.put("ops", gson.toJson(ops));
-                   Prenotazione[] prens = {prenotazione};
-                   params.put("prenotazioni", gson.toJson(prens));
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            prenotazione = (Prenotazione) extra.getSerializable(PRENOTAZIONE_EXTRA);
+            indexPrenotazione = extra.getInt(INDEX_PRENOTAZIONE_EXTRA);
+        }
 
-                   AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
-                   try {
-                       if (task.get().equals("true")) {
-                           Toast.makeText(getApplicationContext(), "Stato della prenotazione cambiato con successo", Toast.LENGTH_LONG).show();
+        FloatingActionButton fab = findViewById(R.id.fab); //per salvare lo stato della prenotazione
+        fab.setOnClickListener(view -> {
+            boolean result = false;
+            String op = "disdire";
+            Stato newStato = Stato.DISDETTA;
+            switch (stato.getCheckedRadioButtonId()) {
+                case R.id.radioButtonAttiva:
+                    Toast.makeText(getApplicationContext(), "Lo tua prenotazione è già attiva", Toast.LENGTH_LONG).show();
+                    newStato = Stato.ATTIVA;
+                    break;
+                case R.id.radioButtonEffettuata:
+                    op = "effettuare";
+                    newStato = Stato.EFFETTUATA;
+                case R.id.radioButtonDisdetta:
+                    HashMap<String, String> params = new HashMap<>();
+                    String[] ops = {op};
+                    params.put("ops", gson.toJson(ops));
+                    Prenotazione[] prens = {prenotazione};
+                    params.put("prenotazioni", gson.toJson(prens));
 
-                       } else {
-                           Toast.makeText(getApplicationContext(), "Errore durante il cambio di stato della prenotazione ", Toast.LENGTH_LONG).show();
-                       }
-                   } catch (ExecutionException | InterruptedException e) {
-                       e.printStackTrace();
-                   }
-                   onBackPressed();
-         }
-      });
-
-      docente = findViewById(R.id.docDettailsText);
-      corso = findViewById(R.id.corDettailsText);
-      giorno = findViewById(R.id.giorDettailsText);
-      ora = findViewById(R.id.oraDettailsText);
-      stato = findViewById(R.id.statoDetailsRadio);
-
-      assert prenotazione != null;
-      docente.setText(prenotazione.getDocente().toString());
-      corso.setText(prenotazione.getCorso().getTitolo());
-      giorno.setText(prenotazione.getGiorno().toString());
-      ora.setText(prenotazione.getSlot().toString());
-      switch (prenotazione.getStato()) {
-          case EFFETTUATA:
-            stato.check(R.id.radioButtonEffettuata);
-            for (int i = 0; i < 3; i++) {
-               stato.getChildAt(i).setEnabled(false);
+                    AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
+                    try {
+                        if (task.get().equals("true")) {
+                            Toast.makeText(getApplicationContext(), "Stato della prenotazione cambiato con successo", Toast.LENGTH_LONG).show();
+                            result = true;
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Errore durante il cambio di stato della prenotazione ", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
             }
-            fab.setEnabled(false);
-            break;
-          case ATTIVA:
-            stato.check(R.id.radioButtonAttiva);
-            for (int i = 0; i < 3; i++) {
-               stato.getChildAt(i).setEnabled(true);
+            if (result) {
+                Intent res = new Intent();
+                res.putExtra(INDEX_PRENOTAZIONE_EXTRA, indexPrenotazione);
+                res.putExtra(STATO_EXTRA, newStato);
+                setResult(CODE_OK, res);
             }
-            fab.setEnabled(true);
-            break;
-          case DISDETTA:
-            stato.check(R.id.radioButtonDisdetta);
-            for (int i = 0; i < 3; i++) {
-               stato.getChildAt(i).setEnabled(false);
-            }
-            fab.setEnabled(false);
-            break;
-      }
+            finish();
+        });
 
-       stato.setOnCheckedChangeListener((group, checkedId) -> {
-           switch (checkedId) {
-               case R.id.radioButtonEffettuata:
-                   break;
-               case R.id.radioButtonAttiva:
-                   break;
-               case R.id.radioButtonDisdetta:
-                   break;
-         }
-      });
-   }
+        docente = findViewById(R.id.docDettailsText);
+        corso = findViewById(R.id.corDettailsText);
+        giorno = findViewById(R.id.giorDettailsText);
+        ora = findViewById(R.id.oraDettailsText);
+        stato = findViewById(R.id.statoDetailsRadio);
+
+        assert prenotazione != null;
+        docente.setText(prenotazione.getDocente().toString());
+        corso.setText(prenotazione.getCorso().getTitolo());
+        giorno.setText(prenotazione.getGiorno().toString());
+        ora.setText(prenotazione.getSlot().toString());
+        switch (prenotazione.getStato()) {
+            case EFFETTUATA:
+                stato.check(R.id.radioButtonEffettuata);
+                for (int i = 0; i < 3; i++) {
+                    stato.getChildAt(i).setEnabled(false);
+                }
+                fab.setEnabled(false);
+                break;
+            case ATTIVA:
+                stato.check(R.id.radioButtonAttiva);
+                for (int i = 0; i < 3; i++) {
+                    stato.getChildAt(i).setEnabled(true);
+                }
+                fab.setEnabled(true);
+                break;
+            case DISDETTA:
+                stato.check(R.id.radioButtonDisdetta);
+                for (int i = 0; i < 3; i++) {
+                    stato.getChildAt(i).setEnabled(false);
+                }
+                fab.setEnabled(false);
+                break;
+        }
+
+        stato.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.radioButtonEffettuata:
+                    break;
+                case R.id.radioButtonAttiva:
+                    break;
+                case R.id.radioButtonDisdetta:
+                    break;
+            }
+        });
+    }
 }

@@ -1,7 +1,6 @@
 package com.ium.unito.progetto_ium_tweb1.ui.viewPren;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -27,19 +27,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHolder> implements Filterable {
-    private Context context;
+    private Fragment fragment;
     private StoricoViewModel storicoViewModel;
     private List<Prenotazione> prenotazioniVisibili;
-    private List<Prenotazione> prenotazioniNonVisibili;
 
 
-    public StoricoAdapter(Context context, StoricoViewModel storicoViewModel) {
-        this.context = context;
+    public StoricoAdapter(Fragment fragment, StoricoViewModel storicoViewModel) {
+        this.fragment = fragment;
         this.storicoViewModel = storicoViewModel;
+        initPrenotazioniVisibili();
 
-        prenotazioniVisibili = storicoViewModel.getPrenotazioni().getValue();
-        prenotazioniNonVisibili = new ArrayList<>();
-        // System.out.println("le prenotazioniVisibili: " + prenotazioniVisibili);
+        this.storicoViewModel.getPrenotazioni().observe(fragment,
+                prenotazioni -> notifyDataSetChanged());
+    }
+
+    private void initPrenotazioniVisibili() {
+        List<Prenotazione> prenotazioni = storicoViewModel.getPrenotazioni().getValue();
+        if (prenotazioni != null)
+            prenotazioniVisibili = new ArrayList<>(prenotazioni);
+        else
+            prenotazioniVisibili = new ArrayList<>();
     }
 
     @NonNull
@@ -61,20 +68,20 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
         holder.ora.setText(prenotazione.getSlot().toString());
         switch (prenotazione.getStato()) {
             case EFFETTUATA:
-                holder.card.setStrokeColor(context.getColor(R.color.stato_prenotazione_effettuata));
+                holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_effettuata));
                 break;
             case ATTIVA:
-                holder.card.setStrokeColor(context.getColor(R.color.stato_prenotazione_attiva));
+                holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_attiva));
                 break;
             case DISDETTA:
-                holder.card.setStrokeColor(context.getColor(R.color.stato_prenotazione_disdetta));
+                holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_disdetta));
                 break;
         }
-        holder.touch_layout.setOnClickListener(view -> {
-            notifyItemChanged(holder.getAdapterPosition());
-            Intent detailsIntent = new Intent(context, DetailsActivity.class);
-            detailsIntent.putExtra("prenotazione", getItem(position));
-            context.startActivity(detailsIntent);
+        holder.touchLayout.setOnClickListener(view -> {
+            Intent detailsIntent = new Intent(fragment.getContext(), DetailsActivity.class);
+            detailsIntent.putExtra(DetailsActivity.PRENOTAZIONE_EXTRA, getItem(position));
+            detailsIntent.putExtra(DetailsActivity.INDEX_PRENOTAZIONE_EXTRA, position);
+            fragment.startActivityForResult(detailsIntent, DetailsActivity.CODE_STORICO);
         });
     }
 
@@ -94,56 +101,41 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
             protected FilterResults performFiltering(CharSequence charSequence) {
                 // formato: <ricerca_docente>_<ricerca_corso>_<indice_ora>_<indice_giorno>_<indice_stato>
                 String[] filterString = ((String) charSequence).split("_");
-                prenotazioniVisibili.addAll(prenotazioniNonVisibili);
+                List<Prenotazione> prenotazioni = storicoViewModel.getPrenotazioni().getValue();
+                if (prenotazioni == null)
+                    return null;
+                prenotazioniVisibili = new ArrayList<>(prenotazioni);
+
                 if (!filterString[0].isEmpty()) {
                     String[] docente = filterString[0].split("\\+");
-                    prenotazioniVisibili.removeIf(prenotazione -> {
-                        if (Arrays.stream(docente).noneMatch(elem -> prenotazione.getDocente().toString().toLowerCase().contains(elem.toLowerCase())))
-                            return prenotazioniNonVisibili.add(prenotazione);
-                        else
-                            return false;
-                    });
+                    prenotazioniVisibili.removeIf(prenotazione ->
+                            Arrays.stream(docente).noneMatch(elem ->
+                                    prenotazione.getDocente().toString().toLowerCase().contains(elem.toLowerCase())));
                 }
 
                 if (!filterString[1].isEmpty())
-                    prenotazioniVisibili.removeIf(prenotazione -> {
-                        if (!prenotazione.getCorso().getTitolo().toLowerCase().contains(filterString[1].toLowerCase()))
-                            return prenotazioniNonVisibili.add(prenotazione);
-                        else
-                            return false;
-                    });
+                    prenotazioniVisibili.removeIf(prenotazione ->
+                            !prenotazione.getCorso().getTitolo().toLowerCase().contains(filterString[1].toLowerCase()));
 
                 int slotIndex = Integer.parseInt(filterString[2]);
                 if (slotIndex != 0) {
                     Slot[] slots = Slot.values();
-                    prenotazioniVisibili.removeIf(prenotazione -> {
-                        if (prenotazione.getSlot() != slots[slotIndex - 1])
-                            return prenotazioniNonVisibili.add(prenotazione);
-                        else
-                            return false;
-                    });
+                    prenotazioniVisibili.removeIf(prenotazione ->
+                            prenotazione.getSlot() != slots[slotIndex - 1]);
                 }
 
                 int giornoIndex = Integer.parseInt(filterString[3]);
                 if (giornoIndex != 0) {
                     Giorno[] giorni = Giorno.values();
-                    prenotazioniVisibili.removeIf(prenotazione -> {
-                        if (prenotazione.getGiorno() != giorni[giornoIndex - 1])
-                            return prenotazioniNonVisibili.add(prenotazione);
-                        else
-                            return false;
-                    });
+                    prenotazioniVisibili.removeIf(prenotazione ->
+                            prenotazione.getGiorno() != giorni[giornoIndex - 1]);
                 }
 
                 int statoIndex = Integer.parseInt(filterString[4]);
                 if (statoIndex != 0) {
                     Stato[] stati = Stato.values();
-                    prenotazioniVisibili.removeIf(prenotazione -> {
-                        if (prenotazione.getStato() != stati[statoIndex - 1])
-                            return prenotazioniNonVisibili.add(prenotazione);
-                        else
-                            return false;
-                    });
+                    prenotazioniVisibili.removeIf(prenotazione ->
+                            prenotazione.getStato() != stati[statoIndex - 1]);
                 }
                 return null;
             }
@@ -160,7 +152,7 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
         TextView corso;
         TextView giorno;
         TextView ora;
-        RelativeLayout touch_layout;
+        RelativeLayout touchLayout;
         MaterialCardView card;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -169,9 +161,8 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
             corso = itemView.findViewById(R.id.corso_text_view);
             giorno = itemView.findViewById(R.id.giorno_text_view);
             ora = itemView.findViewById(R.id.ora_text_view);
-            touch_layout = itemView.findViewById(R.id.touch_layout);
+            touchLayout = itemView.findViewById(R.id.touch_layout);
             card = itemView.findViewById(R.id.card_row);
         }
     }
-
 }
