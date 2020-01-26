@@ -2,6 +2,7 @@ package com.ium.unito.progetto_ium_tweb1;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class HomepageActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         TextView usernameTextView = navigationView.getHeaderView(0).findViewById(R.id.user_textView);
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Preference.class.getName(),MODE_PRIVATE);
         String username = preferences.getString("username", "Ospite");
         usernameTextView.setText("Benvenuto/a " + username);
     }

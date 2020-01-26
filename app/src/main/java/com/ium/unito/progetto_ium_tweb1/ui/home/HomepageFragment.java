@@ -73,8 +73,6 @@ public class HomepageFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         infoProssimaPrenotazione = root.findViewById(R.id.info_prossima_prenotazione);
-        userTextView = root.findViewById(R.id.user_textView);
-        userTextView.setText(username);
         numPrenotazioni = root.findViewById(R.id.num_pren);
         numPrenotazioniAttive = root.findViewById(R.id.num_attive);
         numPrenotazioniEffettuate = root.findViewById(R.id.num_effettuate);
@@ -87,6 +85,11 @@ public class HomepageFragment extends Fragment {
         oraTextView = root.findViewById(R.id.ora_text_view);
         cardProssimaPrenotazione = root.findViewById(R.id.card_prossima_prenotazione);
         cardInfoPrentazioni = root.findViewById(R.id.info_prenotazioni);
+        userTextView = root.findViewById(R.id.user_textView);
+        StringBuilder user = new StringBuilder(userTextView.getText().toString());
+        user.append(" ").append(username);
+        userTextView.setText(user);
+
 
         if (!ospite) {
             storicoViewModel.getPrenotazioni().observe(this, this::setInfo);

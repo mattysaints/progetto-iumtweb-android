@@ -75,6 +75,8 @@ public class PrenotazioniAdapter extends RecyclerView.Adapter<PrenotazioniAdapte
    public void removeItem(int position) {
       prenotazioniVisibili.remove(position);
       notifyItemRemoved(position);
+      notifyItemRangeRemoved(position, 1);
+      notifyDataSetChanged();
    }
 
    @Override

@@ -15,7 +15,14 @@
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_visualizza"
-            android:title="Visualizza le tue prenotazioniFiltered" />
+            android:title="Visualizza le tue prenotazioni" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout"
+            android:onClick=""/>
     </group>
 
 </menu>
