@@ -23,6 +23,7 @@ import com.ium.unito.progetto_ium_tweb1.model.Slot;
 import com.ium.unito.progetto_ium_tweb1.model.Stato;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -118,22 +119,30 @@ public class HomepageFragment extends Fragment {
 
         Giorno nextGiorno = nextGiorno();
         Slot nextSlot = nextSlot();
-        Optional<Prenotazione> optionalPrenotazione = supplier.get()
-                .filter(p -> p.getStato() == Stato.ATTIVA
-                        && p.getGiorno().compareTo(nextGiorno) >= 0
-                        && p.getSlot().compareTo(nextSlot) >= 0)
-                .min((p1, p2) -> {
-                    int compareGiorno = p1.getGiorno().compareTo(p2.getGiorno());
-                    return compareGiorno == 0
-                            ? p1.getSlot().compareTo(p2.getSlot())
-                            : compareGiorno;
-                });
 
         numPrenotazioni.setText(String.valueOf(countPrenotazioni));
         numPrenotazioniEffettuate.setText(String.valueOf(countPrenotazioniEffettuate));
         numPrenotazioniAttive.setText(String.valueOf(countPrenotazioniAttive));
         numPrenotazioniDisdette.setText(String.valueOf(countPrenotazioniDisdette));
         numCorsi.setText(String.valueOf(countCorsi));
+
+        Supplier<Stream<Prenotazione>> streamSupplier = () ->
+                supplier.get()
+                        .filter(p -> p.getStato() == Stato.ATTIVA
+                                && (p.getGiorno().compareTo(nextGiorno) > 0
+                                || p.getGiorno().compareTo(nextGiorno) == 0
+                                && p.getSlot().compareTo(nextSlot) > 0));
+
+        Optional<Prenotazione> optionalPrenotazione;
+        Comparator<Prenotazione> prenotazioneComparator =
+                Comparator
+                        .comparing(Prenotazione::getGiorno)
+                        .thenComparing(Prenotazione::getSlot);
+
+        if (streamSupplier.get().count() > 0)
+            optionalPrenotazione = streamSupplier.get().min(prenotazioneComparator);
+        else
+            optionalPrenotazione = supplier.get().min(prenotazioneComparator);
 
         if (optionalPrenotazione.isPresent()) {
             Prenotazione prossima = optionalPrenotazione.get();
@@ -176,7 +185,7 @@ public class HomepageFragment extends Fragment {
         if (ora < 15 || ora > 19)
             slot = Slot.SLOT1;
         else
-            slot = Slot.fromInt(ora);
+            slot = Slot.fromInt(ora % 15);
         return slot;
     }
 }
