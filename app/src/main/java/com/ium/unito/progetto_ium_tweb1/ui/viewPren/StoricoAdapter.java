@@ -80,12 +80,11 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
         holder.touchLayout.setOnClickListener(view -> {
             Intent detailsIntent = new Intent(fragment.getContext(), DetailsActivity.class);
             detailsIntent.putExtra(DetailsActivity.PRENOTAZIONE_EXTRA, getItem(position));
-            detailsIntent.putExtra(DetailsActivity.INDEX_PRENOTAZIONE_EXTRA, position);
             fragment.startActivityForResult(detailsIntent, DetailsActivity.CODE_STORICO);
         });
     }
 
-    public Prenotazione getItem(int position) {
+    private Prenotazione getItem(int position) {
         return prenotazioniVisibili.get(position);
     }
 

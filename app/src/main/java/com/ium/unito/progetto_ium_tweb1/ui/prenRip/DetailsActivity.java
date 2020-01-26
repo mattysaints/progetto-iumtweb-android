@@ -23,8 +23,6 @@ import java.util.concurrent.ExecutionException;
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String PRENOTAZIONE_EXTRA = "prenotazioni.prenotazione";
-    public static final String INDEX_PRENOTAZIONE_EXTRA = "prenotazioni.index_prenotazione";
-    public static final String DELETED_ITEM_INDEX_EXTRA = "prenotazioni.deleted_item_index";
     public static final String DELETED_ITEM = "prenotazioni.deleted_item";
     public static final int CODE_PRENOTA = 1;
     public static final int CODE_OK = 0;
@@ -51,7 +49,6 @@ public class DetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle == null)
             throw new RuntimeException("Il bundle è null");
-        final int position = bundle.getInt(INDEX_PRENOTAZIONE_EXTRA);
         prenotazione = (Prenotazione) bundle.getSerializable(PRENOTAZIONE_EXTRA);
         if (prenotazione == null)
             throw new RuntimeException("La prenotazione è null");
@@ -76,7 +73,6 @@ public class DetailsActivity extends AppCompatActivity {
                 String result = task.get();
                 if (Boolean.parseBoolean(result)) {
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra(DELETED_ITEM_INDEX_EXTRA, position);
                     resultIntent.putExtra(DELETED_ITEM, prenotazione);
                     setResult(CODE_OK, resultIntent);
                     Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_LONG).show();

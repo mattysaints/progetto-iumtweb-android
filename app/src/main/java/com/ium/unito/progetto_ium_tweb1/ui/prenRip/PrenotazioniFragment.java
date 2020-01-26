@@ -133,12 +133,11 @@ public class PrenotazioniFragment extends Fragment {
             List<Prenotazione> storico = storicoViewModel.getPrenotazioni().getValue();
             List<Prenotazione> disponibili = prenotazioniViewModel.getPrenotazioni().getValue();
             if (extras != null && storico != null && disponibili != null) {
-                int position = extras.getInt(DetailsActivity.DELETED_ITEM_INDEX_EXTRA);
                 Prenotazione prenotazione = (Prenotazione) extras.getSerializable(DetailsActivity.DELETED_ITEM);
                 if (prenotazione != null) {
                     prenotazione.setStato(Stato.ATTIVA);
                     storico.add(prenotazione);
-                    boolean rem = disponibili.remove(new Prenotazione(
+                    disponibili.remove(new Prenotazione(
                             prenotazione.getDocente(),
                             prenotazione.getCorso(),
                             null,

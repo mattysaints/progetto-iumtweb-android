@@ -58,7 +58,6 @@ public class PrenotazioniAdapter extends RecyclerView.Adapter<PrenotazioniAdapte
         holder.ora.setText(prenotazione.getSlot().toString());
         holder.touchLayout.setOnClickListener(view -> {
             Intent detailsIntent = new Intent(fragment.getContext(), DetailsActivity.class);
-            detailsIntent.putExtra(DetailsActivity.INDEX_PRENOTAZIONE_EXTRA, position);
             detailsIntent.putExtra(DetailsActivity.PRENOTAZIONE_EXTRA, getItem(position));
             fragment.startActivityForResult(detailsIntent, DetailsActivity.CODE_PRENOTA);
         });

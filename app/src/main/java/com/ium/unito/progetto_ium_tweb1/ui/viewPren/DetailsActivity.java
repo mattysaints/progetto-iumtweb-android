@@ -24,7 +24,6 @@ import java.util.concurrent.ExecutionException;
 public class DetailsActivity extends AppCompatActivity {
     public static final String STATO_EXTRA = "storico.stato";
     public static final String PRENOTAZIONE_EXTRA = "storico.prenotazione";
-    public static final String INDEX_PRENOTAZIONE_EXTRA = "storico.index_prenotazione";
     public static final int CODE_STORICO = 2;
     public static final int CODE_OK = 0;
 
@@ -36,7 +35,6 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView ora;
     private RadioGroup stato;
     private Prenotazione prenotazione;
-    private int indexPrenotazione;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,6 @@ public class DetailsActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             prenotazione = (Prenotazione) extra.getSerializable(PRENOTAZIONE_EXTRA);
-            indexPrenotazione = extra.getInt(INDEX_PRENOTAZIONE_EXTRA);
         }
 
         FloatingActionButton fab = findViewById(R.id.fab); //per salvare lo stato della prenotazione
@@ -88,7 +85,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
             if (result) {
                 Intent res = new Intent();
-                res.putExtra(INDEX_PRENOTAZIONE_EXTRA, indexPrenotazione);
+                res.putExtra(PRENOTAZIONE_EXTRA, prenotazione);
                 res.putExtra(STATO_EXTRA, newStato);
                 setResult(CODE_OK, res);
             }

@@ -148,11 +148,14 @@ public class StoricoFragment extends Fragment {
 
             if (extras != null) {
                 Stato newStato = (Stato) extras.getSerializable(DetailsActivity.STATO_EXTRA);
-                int prenotazioneIndex = extras.getInt(DetailsActivity.INDEX_PRENOTAZIONE_EXTRA);
+                Prenotazione prenotazione = (Prenotazione) extras.getSerializable(DetailsActivity.PRENOTAZIONE_EXTRA);
                 List<Prenotazione> prenotazioni = storicoViewModel.getPrenotazioni().getValue();
 
                 if (prenotazioni != null) {
-                    prenotazioni.get(prenotazioneIndex).setStato(newStato);
+                    prenotazioni.forEach(p -> {
+                        if (p.equals(prenotazione))
+                            p.setStato(newStato);
+                    });
                     filterPrenotazioni();
                 }
             }
