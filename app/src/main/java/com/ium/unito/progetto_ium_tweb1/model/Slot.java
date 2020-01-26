@@ -20,7 +20,7 @@ public enum Slot implements Serializable {
 
     @Override
     public String toString() {
-        return Integer.toString(value) + "-" + Integer.toString(value+1) ;
+        return value + "-" + (value + 1);
     }
 
     public static Slot fromInt(int hour) {

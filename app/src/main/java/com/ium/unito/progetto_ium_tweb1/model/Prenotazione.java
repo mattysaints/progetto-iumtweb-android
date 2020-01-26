@@ -67,4 +67,8 @@ public class Prenotazione implements Serializable {
     public void setUtente(Utente utente) {
         this.utente = utente;
     }
+
+    public void setStato(Stato newStato) {
+        this.stato = newStato;
+    }
 }
