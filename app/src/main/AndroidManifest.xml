@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".ui.prenRip.DetailsActivity"
             android:label="@string/title_activity_dettails"
@@ -21,21 +21,12 @@
 
         </activity>
         <activity
-            android:name=".Homepage"
+            android:name=".HomepageActivity"
             android:label="@string/title_activity_homepage"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Main"
-            android:label="@string/title_activity_main"
-            android:parentActivityName=".Login"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ium.unito.progetto_ium_tweb1.Login" />
-        </activity>
-        <activity
-            android:name=".Login"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -45,7 +36,7 @@
         </activity>
 
         <activity
-            android:name=".ui.viewPren.PopUpDetails"
+            android:name=".ui.viewPren.DetailsActivity"
             android:label="PopUpDetails"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
