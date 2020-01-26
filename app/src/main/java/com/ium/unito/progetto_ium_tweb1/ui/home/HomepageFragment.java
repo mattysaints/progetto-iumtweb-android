@@ -109,13 +109,13 @@ public class HomepageFragment extends Fragment {
      * @param prenotazioni: prenotazioni correnti
      */
     private void setInfo(List<Prenotazione> prenotazioni) {
-        Supplier<Stream<Prenotazione>> supplier = prenotazioni::parallelStream;
+        Supplier<Stream<Prenotazione>> prenotazioniSupp = prenotazioni::parallelStream;
 
-        long countPrenotazioniEffettuate = supplier.get().filter(p -> p.getStato() == Stato.EFFETTUATA).count();
-        long countPrenotazioniAttive = supplier.get().filter(p -> p.getStato() == Stato.ATTIVA).count();
-        long countPrenotazioniDisdette = supplier.get().filter(p -> p.getStato() == Stato.DISDETTA).count();
-        long countPrenotazioni = supplier.get().count();
-        long countCorsi = supplier.get().map(Prenotazione::getCorso).distinct().count();
+        long countPrenotazioniEffettuate = prenotazioniSupp.get().filter(p -> p.getStato() == Stato.EFFETTUATA).count();
+        long countPrenotazioniAttive = prenotazioniSupp.get().filter(p -> p.getStato() == Stato.ATTIVA).count();
+        long countPrenotazioniDisdette = prenotazioniSupp.get().filter(p -> p.getStato() == Stato.DISDETTA).count();
+        long countPrenotazioni = prenotazioniSupp.get().count();
+        long countCorsi = prenotazioniSupp.get().map(Prenotazione::getCorso).distinct().count();
 
         Giorno nextGiorno = nextGiorno();
         Slot nextSlot = nextSlot();
@@ -126,12 +126,12 @@ public class HomepageFragment extends Fragment {
         numPrenotazioniDisdette.setText(String.valueOf(countPrenotazioniDisdette));
         numCorsi.setText(String.valueOf(countCorsi));
 
-        Supplier<Stream<Prenotazione>> streamSupplier = () ->
-                supplier.get()
-                        .filter(p -> p.getStato() == Stato.ATTIVA
-                                && (p.getGiorno().compareTo(nextGiorno) > 0
-                                || p.getGiorno().compareTo(nextGiorno) == 0
-                                && p.getSlot().compareTo(nextSlot) > 0));
+        Supplier<Stream<Prenotazione>> attiveSupp = () ->
+                prenotazioniSupp.get().filter(p -> p.getStato() == Stato.ATTIVA);
+        Supplier<Stream<Prenotazione>> prossimeAttiveSupp = () ->
+                attiveSupp.get().filter(p ->
+                        p.getGiorno().compareTo(nextGiorno) > 0
+                                || p.getGiorno().compareTo(nextGiorno) == 0 && p.getSlot().compareTo(nextSlot) > 0);
 
         Optional<Prenotazione> optionalPrenotazione;
         Comparator<Prenotazione> prenotazioneComparator =
@@ -139,10 +139,10 @@ public class HomepageFragment extends Fragment {
                         .comparing(Prenotazione::getGiorno)
                         .thenComparing(Prenotazione::getSlot);
 
-        if (streamSupplier.get().count() > 0)
-            optionalPrenotazione = streamSupplier.get().min(prenotazioneComparator);
+        if (prossimeAttiveSupp.get().count() > 0)
+            optionalPrenotazione = prossimeAttiveSupp.get().min(prenotazioneComparator);
         else
-            optionalPrenotazione = supplier.get().min(prenotazioneComparator);
+            optionalPrenotazione = attiveSupp.get().min(prenotazioneComparator);
 
         if (optionalPrenotazione.isPresent()) {
             Prenotazione prossima = optionalPrenotazione.get();
