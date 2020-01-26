@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
-        android:text="utente"
+        android:text=""
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -43,10 +43,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_textView"
-        android:layout_margin="5dp"
+        android:layout_margin="7dp"
         app:cardBackgroundColor="@color/card_color"
-        app:cardCornerRadius="0dp"
-        app:strokeColor="@color/colorAccent"
+        app:cardCornerRadius="5dp"
+        app:strokeColor="@color/design_default_color_primary"
         app:strokeWidth="4dp">
 
         <RelativeLayout

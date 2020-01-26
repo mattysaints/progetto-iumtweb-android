@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -58,14 +59,16 @@ public class HomepageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentActivity activity = getActivity();
-        SharedPreferences preferences = null;
+        SharedPreferences preferences;
         String username = null;
         boolean ospite = false;
 
-        if (activity != null) {
-            preferences = activity.getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
-            storicoViewModel = ViewModelProviders.of(activity).get(StoricoViewModel.class);
-        }
+        if (activity == null)
+            throw new RuntimeException("L'activity è null");
+
+        preferences = activity.getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
+        storicoViewModel = ViewModelProviders.of(activity).get(StoricoViewModel.class);
+
         if (preferences != null) {
             storicoViewModel.setPreferences(preferences);
             username = preferences.getString("username", "Ospite");
@@ -91,6 +94,8 @@ public class HomepageFragment extends Fragment {
         user.append(" ").append(username);
         userTextView.setText(user);
 
+        MaterialCardView cardRow = root.findViewById(R.id.card_row);
+        cardRow.setStrokeColor(ContextCompat.getColor(activity, R.color.design_default_color_primary));
 
         if (!ospite) {
             storicoViewModel.getPrenotazioni().observe(this, this::setInfo);

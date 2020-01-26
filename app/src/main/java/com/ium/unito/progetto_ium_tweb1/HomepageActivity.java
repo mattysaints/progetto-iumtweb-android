@@ -54,8 +54,8 @@ public class HomepageActivity extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.homepage, menu);
         SharedPreferences preferences = getSharedPreferences(Preference.class.getName(),MODE_PRIVATE);
         String username = preferences.getString("username", "Ospite");
-        if(username.equals("Ospite")){
-            //menu.findItem(R.id.nav_slideshow).setVisible(false);
+        if (preferences.getBoolean("ospite", false)) {
+            menu.findItem(R.id.nav_slideshow).setVisible(false);
         }
         return true;
     }
