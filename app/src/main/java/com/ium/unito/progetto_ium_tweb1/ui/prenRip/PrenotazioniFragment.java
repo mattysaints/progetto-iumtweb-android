@@ -23,9 +23,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ium.unito.progetto_ium_tweb1.R;
+import com.ium.unito.progetto_ium_tweb1.model.Prenotazione;
+import com.ium.unito.progetto_ium_tweb1.model.Stato;
+import com.ium.unito.progetto_ium_tweb1.ui.home.StoricoViewModel;
+
+import java.util.List;
 
 public class PrenotazioniFragment extends Fragment {
     private PrenotazioniViewModel prenotazioniViewModel;
+    private StoricoViewModel storicoViewModel;
     private PrenotazioniAdapter adapter;
     private AlertDialog.Builder builder;
 
@@ -43,6 +49,7 @@ public class PrenotazioniFragment extends Fragment {
         if (activity != null) {
             preferences = activity.getSharedPreferences("user_information", AppCompatActivity.MODE_PRIVATE);
             prenotazioniViewModel = ViewModelProviders.of(activity).get(PrenotazioniViewModel.class);
+            storicoViewModel = ViewModelProviders.of(activity).get(StoricoViewModel.class);
         }
         if (preferences != null) {
             prenotazioniViewModel.setPreferences(preferences);
@@ -60,7 +67,7 @@ public class PrenotazioniFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new PrenotazioniAdapter(root.getContext(), prenotazioniViewModel);
+        adapter = new PrenotazioniAdapter(this, prenotazioniViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
 
@@ -116,15 +123,31 @@ public class PrenotazioniFragment extends Fragment {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
-
         return false;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == DetailsActivity.PASS_DELETED_ITEM) {
-            int position = data.getIntExtra("deleted_item", -1);
-            adapter.removeItem(position);
+        if (resultCode == DetailsActivity.CODE_OK && requestCode == DetailsActivity.CODE_PRENOTA && data != null) {
+            Bundle extras = data.getExtras();
+            List<Prenotazione> storico = storicoViewModel.getPrenotazioni().getValue();
+            List<Prenotazione> disponibili = prenotazioniViewModel.getPrenotazioni().getValue();
+            if (extras != null && storico != null && disponibili != null) {
+                int position = extras.getInt(DetailsActivity.DELETED_ITEM_INDEX_EXTRA);
+                Prenotazione prenotazione = (Prenotazione) extras.getSerializable(DetailsActivity.DELETED_ITEM);
+                if (prenotazione != null) {
+                    prenotazione.setStato(Stato.ATTIVA);
+                    storico.add(prenotazione);
+                    boolean rem = disponibili.remove(new Prenotazione(
+                            prenotazione.getDocente(),
+                            prenotazione.getCorso(),
+                            null,
+                            prenotazione.getSlot(),
+                            prenotazione.getGiorno(),
+                            null));
+                    filterPrenotazioni();
+                }
+            }
         }
     }
 

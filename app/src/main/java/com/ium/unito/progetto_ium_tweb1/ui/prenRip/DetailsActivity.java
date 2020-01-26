@@ -3,7 +3,6 @@ package com.ium.unito.progetto_ium_tweb1.ui.prenRip;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,63 +22,71 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 public class DetailsActivity extends AppCompatActivity {
-    public static final int PASS_DELETED_ITEM = 1;
-    public static final int DELETED_ITEM = 0;
+    public static final String PRENOTAZIONE_EXTRA = "prenotazioni.prenotazione";
+    public static final String INDEX_PRENOTAZIONE_EXTRA = "prenotazioni.index_prenotazione";
+    public static final String DELETED_ITEM_INDEX_EXTRA = "prenotazioni.deleted_item_index";
+    public static final String DELETED_ITEM = "prenotazioni.deleted_item";
+    public static final int CODE_PRENOTA = 1;
+    public static final int CODE_OK = 0;
 
+    private static final Gson gson = new Gson();
+
+    private Prenotazione prenotazione;
     private TextView docente;
     private TextView corso;
     private TextView giorno;
     private TextView ora;
-    private Gson gson = new Gson();
-    private SharedPreferences pref;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        CollapsingToolbarLayout toolbar_layout = findViewById(R.id.toolbar_layout);
-        toolbar_layout.setTitle("Ripetizione");
+        CollapsingToolbarLayout toolbarLayout = findViewById(R.id.toolbar_layout);
+        toolbarLayout.setTitle("Ripetizione");
 
         Bundle bundle = getIntent().getExtras();
-        final Prenotazione prenotazione = (Prenotazione) bundle.getSerializable("prenotazione");
-        final int position = bundle.getInt("position");
-        final PrenotazioniAdapter adapter = (PrenotazioniAdapter) bundle.getSerializable("adapter");
+        if (bundle == null)
+            throw new RuntimeException("Il bundle è null");
+        final int position = bundle.getInt(INDEX_PRENOTAZIONE_EXTRA);
+        prenotazione = (Prenotazione) bundle.getSerializable(PRENOTAZIONE_EXTRA);
+        if (prenotazione == null)
+            throw new RuntimeException("La prenotazione è null");
 
-        pref = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);
-        String user = pref.getString("username","");
+        preferences = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);
+        String user = preferences.getString("username", "");
         Utente utente = new Utente(user, null, null);
         prenotazione.setUtente(utente);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            try {
-                HashMap<String, String> params = new HashMap<>();
-                String[] ops = {"prenotare"};
-                params.put("ops", gson.toJson(ops));
-                Prenotazione[] prens = {prenotazione};
-                params.put("prenotazioni", gson.toJson(prens));
+            HashMap<String, String> params = new HashMap<>();
+            String[] ops = {"prenotare"};
+            params.put("ops", gson.toJson(ops));
+            Prenotazione[] prens = {prenotazione};
+            params.put("prenotazioni", gson.toJson(prens));
 
-                AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest().execute(new AsyncHttpRequest.Ajax("http://10.0.2.2:8080/progetto_ium_tweb2/OpSuPrenotazioni", "POST", params));
-                try {
-                    String result = task.get();
-                    if (Boolean.parseBoolean(result)) {
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("deleted_item", position);
-                        setResult(DELETED_ITEM, resultIntent);
-                        Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_LONG).show();
-                        onBackPressed();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Errore durante la prenotazione ", Toast.LENGTH_LONG).show();
-                    }
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
+            AsyncHttpRequest task = new AsyncHttpRequest();
+            task.execute(new AsyncHttpRequest.Ajax(
+                    AsyncHttpRequest.URL_OP_SU_PRENOTAZIONI, "POST", params));
+            try {
+                String result = task.get();
+                if (Boolean.parseBoolean(result)) {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(DELETED_ITEM_INDEX_EXTRA, position);
+                    resultIntent.putExtra(DELETED_ITEM, prenotazione);
+                    setResult(CODE_OK, resultIntent);
+                    Toast.makeText(getApplicationContext(), "Prenotazione Avvenuta con successo", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Errore durante la prenotazione ", Toast.LENGTH_LONG).show();
                 }
-            } catch (Exception e) {
+            } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
+            finish();
         });
 
         docente = findViewById(R.id.docDettailsText);
