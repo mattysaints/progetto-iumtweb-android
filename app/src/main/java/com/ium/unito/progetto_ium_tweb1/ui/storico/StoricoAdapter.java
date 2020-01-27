@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -66,15 +67,19 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
         holder.corso.setText(prenotazione.getCorso().getTitolo());
         holder.giorno.setText(prenotazione.getGiorno().toString());
         holder.ora.setText(prenotazione.getSlot().toString());
+        holder.imageView.setPadding(0, 0, 0, 0);
         switch (prenotazione.getStato()) {
             case EFFETTUATA:
                 holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_effettuata));
+                holder.imageView.setImageResource(R.drawable.effettuata);
                 break;
             case ATTIVA:
                 holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_attiva));
+                holder.imageView.setImageResource(R.drawable.attiva);
                 break;
             case DISDETTA:
                 holder.card.setStrokeColor(fragment.getContext().getColor(R.color.stato_prenotazione_disdetta));
+                holder.imageView.setImageResource(R.drawable.disdetta);
                 break;
         }
         holder.touchLayout.setOnClickListener(view -> {
@@ -151,6 +156,7 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
         TextView corso;
         TextView giorno;
         TextView ora;
+        ImageView imageView;
         RelativeLayout touchLayout;
         MaterialCardView card;
 
@@ -162,6 +168,7 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
             ora = itemView.findViewById(R.id.ora_text_view);
             touchLayout = itemView.findViewById(R.id.touch_layout);
             card = itemView.findViewById(R.id.card_row);
+            imageView = itemView.findViewById(R.id.image_books);
         }
     }
 }
