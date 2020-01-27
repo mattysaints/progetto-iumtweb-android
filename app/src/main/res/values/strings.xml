@@ -148,6 +148,7 @@
     <string name="docente_filter">Docente</string>
     <string name="corso_filter">Corso</string>
     <string name="docente_eliminato">Docente Eliminato</string>
+    <string name="corso_eliminato">Corso Eliminato</string>
     <!-- filtri -->
     <string name="ora_spinner_text">Ora</string>
     <string name="giorno_spinner_text">Giorno</string>
@@ -167,4 +168,5 @@
     <string name="label_stato">Stato:</string>
     <string name="storico_prenotazione_help">Qui puoi visualizzare la tua prenotazione. Se è ancora attiva, puoi decidere se disdirla oppure, se sei già andato all\'appuntamento, puoi marcarla come effettuata</string>
     <string name="help_conferma">Per salvare le modifiche clicca il pulsante con la spunta</string>
+
 </resources>

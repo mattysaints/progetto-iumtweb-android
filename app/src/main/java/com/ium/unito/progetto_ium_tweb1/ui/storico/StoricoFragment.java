@@ -126,7 +126,6 @@ public class StoricoFragment extends Fragment {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
-
         return false;
     }
 

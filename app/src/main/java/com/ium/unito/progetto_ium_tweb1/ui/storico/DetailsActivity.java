@@ -99,8 +99,14 @@ public class DetailsActivity extends AppCompatActivity {
         stato = findViewById(R.id.statoDetailsRadio);
 
         assert prenotazione != null;
-        docente.setText(prenotazione.getDocente().toString());
-        corso.setText(prenotazione.getCorso().getTitolo());
+        if(prenotazione.getDocente().getCognome()!=null && prenotazione.getDocente().getNome()!=null)
+            docente.setText(prenotazione.getDocente().toString());
+        else
+            docente.setText(getString(R.string.docente_eliminato));
+        if(prenotazione.getCorso().getTitolo()!=null)
+            corso.setText(prenotazione.getCorso().getTitolo());
+        else
+            corso.setText(getString(R.string.corso_eliminato));
         giorno.setText(prenotazione.getGiorno().toString());
         ora.setText(prenotazione.getSlot().toString());
         switch (prenotazione.getStato()) {

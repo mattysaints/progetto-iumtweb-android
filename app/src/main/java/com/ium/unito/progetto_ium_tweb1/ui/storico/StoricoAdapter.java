@@ -64,7 +64,10 @@ public class StoricoAdapter extends RecyclerView.Adapter<StoricoAdapter.MyViewHo
             holder.docente.setText(prenotazione.getDocente().toString());
         else
             holder.docente.setText(R.string.docente_eliminato);
-        holder.corso.setText(prenotazione.getCorso().getTitolo());
+        if(prenotazione.getCorso().getTitolo()!=null)
+            holder.corso.setText(prenotazione.getCorso().getTitolo());
+        else
+            holder.corso.setText(R.string.corso_eliminato);
         holder.giorno.setText(prenotazione.getGiorno().toString());
         holder.ora.setText(prenotazione.getSlot().toString());
         holder.imageView.setPadding(0, 0, 0, 0);
