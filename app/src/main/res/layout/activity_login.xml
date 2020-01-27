@@ -85,7 +85,7 @@
                 android:textColor="#39974F"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/ospite"
+                android:text="Accedi come ospite"
                 android:textAlignment="center" />
 
         </LinearLayout>

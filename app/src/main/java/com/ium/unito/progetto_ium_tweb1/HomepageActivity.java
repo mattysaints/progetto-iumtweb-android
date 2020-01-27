@@ -46,17 +46,18 @@ public class HomepageActivity extends AppCompatActivity{
         String username = preferences.getString("username", "Ospite");
         usernameTextView.setText("Benvenuto/a " + username);
 
+        if(preferences.getBoolean("ospite",false)){
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_slideshow).setVisible(false);
+            nav_Menu.findItem(R.id.nav_gallery).setTitle("Ripetizioni disponibili");
+        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.homepage, menu);
-        SharedPreferences preferences = getSharedPreferences(Preference.class.getName(),MODE_PRIVATE);
-        String username = preferences.getString("username", "Ospite");
-        if (preferences.getBoolean("ospite", false)) {
-            menu.findItem(R.id.nav_slideshow).setVisible(false);
-        }
         return true;
     }
 
