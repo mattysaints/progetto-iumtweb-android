@@ -159,4 +159,9 @@
     <string name="prossima_prenotazione">Prossima prenotazione</string>
     <string name="ripetizioni_disponibili">Ripetizioni disponibili</string>
     <string name="storico_prenotazioni">Storico prenotazioni</string>
+    <string name="docente">Docente:</string>
+    <string name="corso">Corso:</string>
+    <string name="decorazione_card">Decorazione card</string>
+    <string name="desc_prenotazione">Per prenotare l\'appuntamento clicca sul pulsante \"aggiungi\" in alto.</string>
+    <string name="help_pren">Se una volta prenotata ti rendi conto che non puoi esserci, non ti preoccupare: puoi disdire la prenotazione nella sezione \"Visualizza le tue prenotazioni\".</string>
 </resources>

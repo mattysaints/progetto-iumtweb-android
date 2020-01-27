@@ -22,106 +22,132 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/docDettails"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:paddingVertical="50dp"
-                android:paddingLeft="40dp"
-                android:text="Docente :"
-                android:textSize="20dp"
-                android:textAlignment="center"
-                android:textStyle="bold" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="60dp">
+
+                <ImageView
+                    android:id="@+id/image_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/school"
+                    android:contentDescription="@string/decorazione_card"
+                    android:scaleType="center" />
+
+                <GridLayout
+                    android:id="@+id/grid_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="25dp"
+                    android:background="@android:color/white"
+                    android:paddingHorizontal="10dp">
+
+                    <TextView
+                        android:id="@+id/docDettails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/ic_gdocenti"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:paddingVertical="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/docente"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/corDettails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/ic_gcorsi"
+                        android:drawablePadding="20dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:paddingVertical="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/corso"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/docDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:fontFamily="sans-serif-condensed"
+                        android:paddingVertical="10dp"
+                        android:paddingStart="10dp"
+                        android:text="docente"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/corDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:paddingVertical="10dp"
+                        android:paddingStart="10dp"
+                        android:text="corso"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/giorDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="2"
+                        android:layout_column="0"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/ic_day_color"
+                        android:drawablePadding="10dp"
+                        android:paddingVertical="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="giorno"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/oraDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/clock"
+                        android:drawablePadding="10dp"
+                        android:paddingVertical="10dp"
+                        android:paddingStart="10dp"
+                        android:text="ora"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                </GridLayout>
+
+            </FrameLayout>
 
             <TextView
-                android:id="@+id/corDettails"
+                android:id="@+id/help_pren_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="Corso : "
-                android:textSize="20dp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:layout_below="@+id/docDettails"
-                android:paddingVertical="50dp"
-                android:paddingLeft="55dp"/>
+                android:layout_below="@id/frame_layout"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/desc_prenotazione"
+                android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/giorDettails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Giorno : "
-                android:textSize="20dp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:layout_below="@+id/corDettails"
-                android:paddingVertical="50dp"
-                android:paddingLeft="40dp" />
-
-            <TextView
-                android:id="@+id/oraDettails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ora : "
-                android:textSize="20dp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:layout_below="@+id/giorDettails"
-                android:paddingVertical="50dp"
-                android:paddingLeft="68dp" />
-
-            <TextView
-                android:id="@+id/docDettailsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/docDettails"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingVertical="50dp"
-                android:text="Andrea Bianchi"
-                android:textSize="20dp"
-                android:layout_above="@+id/corDettails"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/corDettailsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Matematica"
-                android:textSize="20dp"
-                android:layout_above="@+id/giorDettails"
-                android:layout_below="@+id/docDettailsText"
-                android:layout_toRightOf="@+id/corDettails"
-                android:layout_alignParentRight="true"
-                android:paddingVertical="50dp"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/giorDettailsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/corDettailsText"
-                android:layout_above="@id/oraDettails"
-                android:layout_toRightOf="@+id/giorDettails"
-                android:layout_alignParentRight="true"
-                android:textSize="20dp"
-                android:paddingVertical="50dp"
-                android:textAlignment="center"
-                android:text="Lunedì" />
-
-            <TextView
-                android:id="@+id/oraDettailsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/giorDettailsText"
-                android:layout_toRightOf="@+id/oraDettails"
-                android:paddingVertical="50dp"
-                android:layout_alignParentRight="true"
-                android:textSize="20dp"
-                android:textAlignment="center"
-                android:text="15 - 16" />
-
+                android:layout_below="@id/help_pren_1"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/help_pren"
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
