@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.ium.unito.progetto_ium_tweb1.ui.prenotazioni.PrenotazioniFragment"
-        android:label="Prenotare una ripetizione"
+        android:label="Prenota una ripetizione"
         tools:layout="@layout/fragment_list_prenotazioni" />
 
     <fragment

@@ -1,9 +1,11 @@
 package com.ium.unito.progetto_ium_tweb1.ui.prenotazioni;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView ora;
     private SharedPreferences preferences;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +63,8 @@ public class DetailsActivity extends AppCompatActivity {
         prenotazione.setUtente(utente);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setEnabled(!ospite);
+        if (ospite)
+            fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(view -> {
             HashMap<String, String> params = new HashMap<>();
             String[] ops = {"prenotare"};

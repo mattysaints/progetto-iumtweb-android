@@ -1,8 +1,10 @@
 package com.ium.unito.progetto_ium_tweb1.ui.storico;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
     private RadioGroup stato;
     private Prenotazione prenotazione;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,8 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         FloatingActionButton fab = findViewById(R.id.fab); //per salvare lo stato della prenotazione
+        if (prenotazione.getStato() != Stato.ATTIVA)
+            fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(view -> {
             boolean result = false;
             String op = "disdire";
