@@ -20,151 +20,182 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/docDettails"
+            <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp">
+
+                <ImageView
+                    android:id="@+id/image_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/school"
+                    android:contentDescription="@string/decorazione_card"
+                    android:scaleType="center" />
+
+                <GridLayout
+                    android:id="@+id/grid_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="25dp"
+                    android:background="@android:color/white"
+                    android:paddingHorizontal="10dp">
+
+                    <TextView
+                        android:id="@+id/docDettails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/ic_gdocenti"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:paddingVertical="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/docente"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/corDettails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/ic_gcorsi"
+                        android:drawablePadding="20dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:paddingVertical="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/corso"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/docDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:fontFamily="sans-serif-condensed"
+                        android:paddingVertical="10dp"
+                        android:paddingStart="10dp"
+                        android:text="docente"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/corDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:paddingVertical="10dp"
+                        android:paddingStart="10dp"
+                        android:text="corso"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/giorDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="2"
+                        android:layout_column="0"
+                        android:layout_gravity="end"
+                        android:drawableStart="@drawable/ic_day_color"
+                        android:drawablePadding="10dp"
+                        android:paddingVertical="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="giorno"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/oraDettailsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/clock"
+                        android:drawablePadding="10dp"
+                        android:paddingVertical="10dp"
+                        android:paddingStart="10dp"
+                        android:text="ora"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                </GridLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_below="@id/frame_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/label_stato"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/statoDetailsRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOff="@string/stato_prenotazione_effettuata"
+                    android:textOn="@string/stato_prenotazione_attiva"
+                    android:textSize="20sp">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonAttiva"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="@string/stato_prenotazione_attiva" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonEffettuata"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="@string/stato_prenotazione_effettuata" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonDisdetta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="@string/stato_prenotazione_disdetta" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/help_storico_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear_layout"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:paddingVertical="25dp"
-                android:paddingLeft="40dp"
-                android:text="Docente :"
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:text="@string/storico_prenotazione_help"
+                android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/docDettailsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/corDettails"
-                android:layout_alignParentRight="true"
+                android:layout_below="@id/help_storico_1"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_toRightOf="@+id/docDettails"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingVertical="25dp"
-                android:text="Andrea Bianchi"
-                android:textAlignment="center"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/corDettails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/docDettails"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:paddingVertical="25dp"
-                android:paddingLeft="55dp"
-                android:text="Corso : "
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/corDettailsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/giorDettails"
-                android:layout_below="@+id/docDettailsText"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/corDettails"
-                android:paddingVertical="25dp"
-                android:text="Matematica"
-                android:textAlignment="center"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/giorDettails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/corDettails"
-                android:paddingVertical="25dp"
-                android:paddingLeft="40dp"
-                android:text="Giorno : "
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/giorDettailsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/oraDettails"
-                android:layout_below="@+id/corDettailsText"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/giorDettails"
-                android:paddingVertical="25dp"
-                android:text="Lunedì"
-                android:textAlignment="center"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/oraDettails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/giorDettails"
-                android:paddingVertical="25dp"
-                android:paddingLeft="68dp"
-                android:text="Ora : "
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/oraDettailsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/giorDettailsText"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/oraDettails"
-                android:paddingVertical="25dp"
-                android:text="15 - 16"
-                android:textAlignment="center"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/statoDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/oraDettails"
-                android:paddingVertical="25dp"
-                android:paddingLeft="68dp"
-                android:text="Stato : "
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/statoDetailsRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/oraDettailsText"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/statoDetails"
-                android:layout_alignTop="@id/statoDetails"
-                android:textOff="@string/stato_prenotazione_effettuata"
-                android:textOn="@string/stato_prenotazione_attiva"
-                android:textSize="20sp" >
-
-                <RadioButton
-                    android:id="@+id/radioButtonAttiva"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/stato_prenotazione_attiva" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonEffettuata"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/stato_prenotazione_effettuata" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonDisdetta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/stato_prenotazione_disdetta" />
-
-            </RadioGroup>
+                android:text="@string/help_conferma"
+                android:textSize="15sp" />
 
 
         </RelativeLayout>

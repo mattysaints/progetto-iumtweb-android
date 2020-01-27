@@ -136,15 +136,15 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
     <!-- stato prenotazioni -->
-    <string name="stato_prenotazione_attiva">attiva</string>
-    <string name="stato_prenotazione_effettuata">effettuata</string>
-    <string name="stato_prenotazione_disdetta">disdetta</string>
+    <string name="stato_prenotazione_attiva">Attiva</string>
+    <string name="stato_prenotazione_effettuata">Effettuata</string>
+    <string name="stato_prenotazione_disdetta">Disdetta</string>
 
     <!-- altre -->
     <string name="logo">Logo</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="ospite">Accedi come ospite</string>
+    <string name="ospite">Accedi cSome ospite</string>
     <string name="docente_filter">Docente</string>
     <string name="corso_filter">Corso</string>
     <string name="docente_eliminato">Docente Eliminato</string>
@@ -164,4 +164,7 @@
     <string name="decorazione_card">Decorazione card</string>
     <string name="desc_prenotazione">Per prenotare l\'appuntamento clicca sul pulsante \"aggiungi\" in alto.</string>
     <string name="help_pren">Se una volta prenotata ti rendi conto che non puoi esserci, non ti preoccupare: puoi disdire la prenotazione nella sezione \"Visualizza le tue prenotazioni\".</string>
+    <string name="label_stato">Stato:</string>
+    <string name="storico_prenotazione_help">Qui puoi visualizzare la tua prenotazione. Se è ancora attiva, puoi decidere se disdirla oppure, se sei già andato all\'appuntamento, puoi marcarla come effettuata</string>
+    <string name="help_conferma">Per salvare le modifiche clicca il pulsante con la spunta</string>
 </resources>
