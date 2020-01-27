@@ -56,9 +56,11 @@ public class DetailsActivity extends AppCompatActivity {
         preferences = getApplicationContext().getSharedPreferences("user_information", Context.MODE_PRIVATE);
         String user = preferences.getString("username", "");
         Utente utente = new Utente(user, null, null);
+        boolean ospite = preferences.getBoolean("ospite", true);
         prenotazione.setUtente(utente);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setEnabled(!ospite);
         fab.setOnClickListener(view -> {
             HashMap<String, String> params = new HashMap<>();
             String[] ops = {"prenotare"};
