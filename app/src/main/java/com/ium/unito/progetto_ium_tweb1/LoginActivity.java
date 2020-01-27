@@ -92,13 +92,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void autenticationOspite(View view) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("admin", false);
-        editor.putBoolean("ospite", true);
-        editor.putString("username", "Ospite");
-        editor.apply();
+        Map<String, String> params = new HashMap<>();
+        params.put("ospite", Boolean.toString(true));
+        AsyncTask<AsyncHttpRequest.Ajax, Void, String> task = new AsyncHttpRequest();
+        task.execute(new AsyncHttpRequest.Ajax(AsyncHttpRequest.URL_LOGIN, "POST", params));
+        Map<String, String> response = null;
 
-        Intent homepageIntent = new Intent(this, HomepageActivity.class);
-        startActivity(homepageIntent);
+        try {
+            response = gson.fromJson(task.get(), new TypeToken<Map<String, String>>() {
+            }.getType());
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (response == null) { // server down
+            Toast toast = Toast.makeText(getApplicationContext(), "Connessione scaduta", Toast.LENGTH_LONG);
+            toast.show();
+
+        } else if (response.get("result") != null && Boolean.parseBoolean(response.get("result"))) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("admin", false);
+            editor.putBoolean("ospite", true);
+            editor.putString("username", "Ospite");
+            editor.apply();
+            Intent homepageIntent = new Intent(this, HomepageActivity.class);
+            startActivity(homepageIntent);
+
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Credenziali inserite non corrette", Toast.LENGTH_LONG);
+            toast.show();
+            password.setText("");
+        }
     }
 }

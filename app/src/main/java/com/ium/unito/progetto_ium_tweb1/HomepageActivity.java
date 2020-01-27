@@ -3,7 +3,6 @@ package com.ium.unito.progetto_ium_tweb1;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -17,6 +16,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.ium.unito.progetto_ium_tweb1.utils.AsyncHttpRequest;
+
+import java.util.concurrent.ExecutionException;
 
 public class HomepageActivity extends AppCompatActivity{
     private AppBarConfiguration mAppBarConfiguration;
@@ -69,6 +71,14 @@ public class HomepageActivity extends AppCompatActivity{
     }
 
     public void gotoLogin(MenuItem item) {
+        AsyncHttpRequest logout = new AsyncHttpRequest();
+        logout.execute(new AsyncHttpRequest.Ajax(AsyncHttpRequest.URL_LOGOUT));
+        try {
+            logout.get(); // riceve la pagina di login del web. Ignorata
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Intent homepageIntent = new Intent(this, LoginActivity.class);
         startActivity(homepageIntent);
     }

@@ -25,6 +25,7 @@ import java.util.Map;
 public class AsyncHttpRequest extends AsyncTask<AsyncHttpRequest.Ajax, Void, String> {
     // server URLs
     public static final String URL_LOGIN = "http://10.0.2.2:8080/progetto_ium_tweb2/Login";
+    public static final String URL_LOGOUT = "http://10.0.2.2:8080/progetto_ium_tweb2/Logout";
     private static final int CONNECTION_TIMEOUT = 2000;
     public static final String URL_STORICO_PRENOTAZIONI = "http://10.0.2.2:8080/progetto_ium_tweb2/StoricoPrenotazioni";
     public static final String URL_RIPETIZIONI_DISPONIBILI = "http://10.0.2.2:8080/progetto_ium_tweb2/RipetizioniDisponibili";
