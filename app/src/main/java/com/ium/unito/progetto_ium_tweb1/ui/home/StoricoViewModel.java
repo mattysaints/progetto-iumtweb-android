@@ -24,7 +24,7 @@ public class StoricoViewModel extends ViewModel {
 
     private SharedPreferences preferences;
     private MutableLiveData<List<Prenotazione>> prenotazioni;
-    private MutableLiveData<Prenotazione> lastPrenotazionehanged;
+    private MutableLiveData<Prenotazione> lastPrenotazioneChanged;
 
     /**
      * Restituisce il mutablelivedata delle prenotazioni
@@ -73,9 +73,9 @@ public class StoricoViewModel extends ViewModel {
      *
      * @return prenotazione
      */
-    public MutableLiveData<Prenotazione> getLastPrenotazionehanged() {
-        if (lastPrenotazionehanged == null)
-            lastPrenotazionehanged = new MutableLiveData<>();
-        return lastPrenotazionehanged;
+    public MutableLiveData<Prenotazione> getLastPrenotazioneChanged() {
+        if (lastPrenotazioneChanged == null)
+            lastPrenotazioneChanged = new MutableLiveData<>();
+        return lastPrenotazioneChanged;
     }
 }
