@@ -187,10 +187,10 @@ public class HomepageFragment extends Fragment {
         int ora = calendar.get(Calendar.HOUR_OF_DAY);
 
         Slot slot;
-        if (ora < 15 || ora > 19)
+        if (ora < 15 || ora >= 19)
             slot = Slot.SLOT1;
         else
-            slot = Slot.fromInt(ora % 15);
+            slot = Slot.fromInt(ora);
         return slot;
     }
 }
